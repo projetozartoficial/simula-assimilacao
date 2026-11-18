@@ -1,0 +1,185 @@
+/* Rolagens, registro e popup de dado. */
+/* ---------- rolagens ---------- */
+.log {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.entry {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 10px;
+  background: var(--panel2);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 3px 10px;
+}
+.entry .wh {
+  font-size: 12px;
+  color: var(--muted);
+}
+.entry .wh b {
+  color: var(--purple-hi);
+  font-weight: 600;
+}
+.entry .wt {
+  font-weight: 600;
+}
+.entry .tot {
+  grid-row: 1 / span 3;
+  grid-column: 2;
+  font-family: var(--f-mono);
+  font-size: 24px;
+  font-weight: 700;
+  align-self: center;
+  text-align: right;
+  min-width: 40px;
+}
+.entry .det {
+  font-family: var(--f-mono);
+  font-size: 12px;
+  color: var(--muted);
+  word-break: break-word;
+}
+.entry.crit {
+  border-color: var(--purple);
+}
+.entry.crit .tot {
+  color: var(--purple-hi);
+}
+.entry.fail .tot {
+  color: var(--red-hi);
+}
+.entry.chat {
+  grid-template-columns: 1fr;
+}
+.entry.chat .wt {
+  font-weight: 400;
+}
+.entry.secret {
+  border-style: dashed;
+}
+.dicebar {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.dicebar button {
+  font-family: var(--f-mono);
+  font-size: 13px;
+}
+
+/* popup de dado (para todos) */
+#dicePops {
+  position: fixed;
+  bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+  left: calc(var(--rail) + 12px + env(safe-area-inset-left, 0px));
+  z-index: 48; /* acima da tela de personagem sem mesa (.soloEd, 44) e abaixo das janelas (50) */
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 8px;
+  pointer-events: none;
+  width: min(320px, calc(100vw - 24px));
+}
+.dpop {
+  pointer-events: auto;
+  background: rgba(14, 21, 17, 0.97);
+  border: 1px solid var(--purple);
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+.dpop.crit {
+  border-color: var(--purple-hi);
+  box-shadow:
+    0 0 0 1px var(--purple-hi),
+    0 10px 30px rgba(35, 155, 114, 0.35);
+}
+.dpop.fail {
+  border-color: var(--red);
+}
+.dpop .t {
+  font-weight: 700;
+  font-size: 14px;
+}
+.dpop .s {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dpop .n {
+  font-family: var(--f-mono);
+  font-size: 28px;
+  font-weight: 700;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .dpop {
+    animation: pop 0.3s ease-out;
+  }
+  @keyframes pop {
+    from {
+      transform: translateX(16px);
+      opacity: 0;
+    }
+    to {
+      transform: none;
+      opacity: 1;
+    }
+  }
+}
+
+/* ---------- natural 20 e 1, visual do dado (jogo/popup-dados.js: SKINS_DADO) ---------- */
+.dpop.crit .n,
+.entry.crit .tot {
+  color: #5fd27a; /* 20 natural / crítico em verde */
+}
+.dpop.fail .n,
+.entry.fail .tot {
+  color: var(--red-hi); /* 1 natural em vermelho */
+}
+.dpop[class*="skin-"],
+.entry[class*="skin-"] {
+  border-color: var(--skin);
+}
+.dpop[class*="skin-"] > span:first-child {
+  color: var(--skin) !important;
+}
+.dpop[class*="skin-"].crit {
+  box-shadow:
+    0 0 0 1px var(--skin),
+    0 10px 30px rgba(0, 0, 0, 0.5);
+}
+.skin-sangue {
+  --skin: #c42a2b;
+}
+.skin-morte {
+  --skin: #8c8c8c;
+}
+.skin-conhecimento {
+  --skin: #d08e0e;
+}
+.skin-energia {
+  --skin: #a347ff;
+}
+.skin-medo {
+  --skin: #4d43ff;
+}
+.skin-ametista {
+  --skin: #a77bdb;
+}
+.skin-rubi {
+  --skin: #e0115f;
+}
+.skin-esmeralda {
+  --skin: #2ecc71;
+}
+.skin-obsidiana {
+  --skin: #5b5b6e;
+}

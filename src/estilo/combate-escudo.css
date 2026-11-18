@@ -1,0 +1,232 @@
+/* Combate, escudo do mestre e homebrew. */
+/* ---------- combate / escudo ---------- */
+.cb {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px;
+}
+.cb.now {
+  border-color: var(--red);
+  box-shadow: inset 3px 0 0 var(--red);
+}
+/* Jogar sozinho: a caixa da sua vez no combate */
+.sozvez {
+  border-color: var(--purple);
+  box-shadow: inset 3px 0 0 var(--purple);
+}
+.sozvez small {
+  opacity: 0.75;
+  font-weight: 400;
+}
+.cb .iv {
+  font-family: var(--f-mono);
+  font-size: 19px;
+  font-weight: 700;
+  text-align: center;
+}
+.cb .cn {
+  font-weight: 600;
+}
+.cb .cs {
+  font-size: 12px;
+  color: var(--muted);
+  font-family: var(--f-mono);
+}
+.cb .act {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.cb.down {
+  opacity: 0.5;
+}
+.cb.npc .cn {
+  color: var(--red-hi);
+}
+.shield {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 10px;
+}
+.scard {
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.scard .top {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+}
+.scard .nm {
+  font-family: var(--f-display);
+  font-size: 18px;
+  line-height: 1.1;
+}
+.mini {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+  text-align: center;
+}
+.mini div {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 3px 0;
+}
+.mini b {
+  display: block;
+  font-family: var(--f-mono);
+  font-size: 15px;
+}
+.mini span {
+  font-size: 10px;
+  color: var(--muted);
+}
+.sbar {
+  display: grid;
+  grid-template-columns: 30px 1fr 30px;
+  gap: 4px;
+  align-items: center;
+}
+.sbar button {
+  padding: 2px 0;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  border-radius: 4px;
+  font-family: var(--f-mono);
+  font-size: 12px;
+}
+.sbar .t {
+  position: relative;
+  height: 20px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.sbar .t i {
+  position: absolute;
+  inset: 0 auto 0 0;
+}
+.sbar .t span {
+  position: relative;
+  display: block;
+  text-align: center;
+  font-family: var(--f-mono);
+  font-size: 12px;
+  line-height: 18px;
+}
+.sbar.pv i {
+  background: var(--red);
+}
+.sbar.san i {
+  background: #1f8a64;
+}
+.sbar.pe i {
+  background: #b4501f;
+}
+.dtref td {
+  font-family: var(--f-mono);
+}
+
+/* ---------- homebrew ---------- */
+.hb {
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--el, var(--purple));
+  border-radius: 8px;
+  padding: 8px 10px;
+  background: var(--panel2);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.hb .hn {
+  font-weight: 700;
+}
+/* Jogar sozinho: o cartão do mestre em cima do mapa (sozinho/missao) */
+.narrador {
+  position: absolute;
+  left: 50%;
+  bottom: calc(70px + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  width: min(600px, calc(100% - 24px));
+  max-height: 55%;
+  overflow: auto;
+  z-index: 5;
+  display: grid;
+  gap: 10px;
+  padding: 14px 16px;
+  background: color-mix(in srgb, var(--panel) 94%, transparent);
+  border: 1px solid var(--purple);
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
+}
+.narrador .nar-txt p {
+  margin: 0 0 8px;
+  line-height: 1.5;
+}
+.narrador .nar-txt p:last-child {
+  margin: 0;
+}
+.narrador .nar-txt p:not(:last-child) {
+  color: var(--muted);
+  font-size: 13px;
+}
+.narrador .nar-eu {
+  font-style: italic;
+}
+.nar-ops {
+  display: grid;
+  gap: 6px;
+}
+.nar-ops .btn {
+  justify-content: space-between;
+  text-align: left;
+}
+.nar-ops small,
+.narrador small {
+  opacity: 0.75;
+  font-weight: 400;
+}
+.sz-ia summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.nar-topo {
+  flex-wrap: nowrap;
+}
+.nar-topo .label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+@media (max-width: 760px) {
+  /* no celular, o cartão do mestre mostra só a última fala */
+  .narrador .nar-txt p:not(:last-child) {
+    display: none;
+  }
+  .narrador {
+    bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+    max-height: 62%;
+  }
+}
+.narrador > * {
+  min-width: 0;
+}
+.narrador {
+  overflow-x: hidden;
+}
