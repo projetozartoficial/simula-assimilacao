@@ -93,7 +93,9 @@ async function arteContaNaMesa(tentativa = 0) {
   try {
     await arteTodas(); // o mestre precisa saber quais artes a mesa já tem
     const conta = await S.db.getCol(contaArtes());
-    const falta = conta.filter(a => a.n && a.url && !(S.arteBest || {})[a.n]);
+    // só as artes de Ameaças deste site (a conta pode ter artes das criaturas do Simula Ordem)
+    const nomes = new Set(allBest().map(b => b.n));
+    const falta = conta.filter(a => a.n && a.url && nomes.has(a.n) && !(S.arteBest || {})[a.n]);
     for (const a of falta)
       await S.db.set(P() + "/arteBest/" + arteKey(a.n), { n: a.n, url: a.url, ts: Date.now() });
   } catch (e) {}
