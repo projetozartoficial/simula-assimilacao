@@ -13,8 +13,8 @@
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Simula Assimilação" />
     <meta property="og:description" content="Mesa virtual de Assimilação RPG: fichas de Infectado, dados de símbolos, Conflitos, Refúgio, mapas e tokens." />
-    <meta property="og:url" content="https://wasmorf.github.io/simula-assimilacao/" />
-    <meta property="og:image" content="https://wasmorf.github.io/simula-assimilacao/assets/logo.png" />
+    <meta property="og:url" content="https://projetozartoficial.github.io/simula-assimilacao/" />
+    <meta property="og:image" content="https://projetozartoficial.github.io/simula-assimilacao/assets/logo.png" />
     <meta name="twitter:card" content="summary" />
     <meta name="theme-color" content="#090d0b" />
     <link rel="apple-touch-icon" href="assets/logo.png" />
@@ -34,7 +34,7 @@
   --line: #26352d;
   --fg: #e7efe9;
   --muted: #8fa198;
-  --purple: #239b72;
+  --purple: #1b7d5b; /* branco por cima: contraste 5,1:1 */
   --purple-hi: #5fe0b0;
   --purple-soft: #0f2e24;
   --red: #d9531f;
@@ -155,7 +155,7 @@ h3 {
   color: #fff;
 }
 .btn.primary:hover {
-  background: #2bb586;
+  background: #187552; /* mais escuro no hover: o branco continua legível (contraste 5,7:1) */
 }
 .btn.danger {
   background: var(--red-soft);
@@ -1275,7 +1275,7 @@ h3 .contador {
   cursor: pointer;
 }
 .pend:hover {
-  background: var(--purple);
+  background: #7330d8; /* roxo mais escuro: o texto claro fica legível (contraste 5,5:1) */
 }
 .pend.ruim {
   border-color: var(--red);
@@ -3885,7 +3885,7 @@ body.me-open {
   padding-bottom: 52px;
 }
 .mesa-del:hover {
-  color: var(--red);
+  color: var(--red-hi);
   border-color: var(--red);
 }
 
@@ -5423,9 +5423,154 @@ textarea,
   width: 15px;
   height: 15px;
 }
+/* Páginas legais, aviso de cookies, caixa de consentimento, rodapé e "Pular para o conteúdo" (legal/legal.js). */
+
+/* título de seção com cara de h3 (a ordem dos títulos continua certa para o leitor de tela) */
+h2.h3 {
+  font-size: 18px;
+  color: var(--purple-hi);
+}
+/* aparece só quando recebe o foco pelo teclado */
+.pular {
+  position: fixed;
+  left: 12px;
+  top: -60px;
+  z-index: 100;
+  background: var(--purple-hi);
+  color: #120a1c;
+  font-weight: 700;
+  padding: 10px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+}
+.pular:focus {
+  top: 12px;
+}
+#conteudo:focus,
+#board:focus {
+  outline: none;
+}
+a {
+  color: var(--purple-hi);
+}
+.legal-txt {
+  max-width: 76ch;
+  margin-top: 24px;
+  line-height: 1.6;
+}
+.legal-txt h1 {
+  font-size: 34px;
+  margin-bottom: 6px;
+}
+.legal-txt h2 {
+  font-size: 21px;
+  margin: 26px 0 8px;
+  color: var(--purple-hi);
+}
+.legal-txt p,
+.legal-txt li {
+  color: var(--fg);
+}
+.legal-txt ul {
+  padding-left: 20px;
+}
+.legal-txt li {
+  margin: 4px 0;
+}
+.legal-data {
+  color: var(--muted);
+  font-size: 13px;
+}
+.legal-tab {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  margin: 10px 0;
+}
+.legal-tab th,
+.legal-tab td {
+  text-align: left;
+  vertical-align: top;
+  padding: 8px;
+  border: 1px solid var(--line);
+}
+.legal-tab th {
+  background: var(--panel2);
+}
+.legal-modal {
+  max-width: 720px;
+  max-height: 86vh;
+  overflow: auto;
+}
+.legal-modal .legal-txt {
+  margin-top: 0;
+}
+/* rodapé: projeto de fã, responsável e links */
+.legal-foot p {
+  margin: 0 0 8px;
+}
+.legal-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+}
+.legal-links a {
+  color: var(--purple-hi);
+  padding: 4px 0;
+}
+/* caixa de consentimento dos formulários */
+.check.consent {
+  align-items: flex-start;
+  font-size: 13px;
+  line-height: 1.45;
+}
+.check.consent input {
+  margin-top: 3px;
+  flex: none;
+}
+/* aviso de cookies na primeira visita */
+.aviso-cookies {
+  position: fixed;
+  left: 50%;
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  width: min(640px, calc(100% - 24px));
+  z-index: 60;
+  display: grid;
+  gap: 10px;
+  padding: 14px 16px;
+  background: var(--panel);
+  border: 1px solid var(--purple);
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+  font-size: 14px;
+}
+.aviso-cookies p {
+  margin: 0;
+  line-height: 1.5;
+}
+@media (max-width: 760px) {
+  .legal-tab,
+  .legal-tab tbody,
+  .legal-tab tr,
+  .legal-tab td {
+    display: block;
+    width: 100%;
+  }
+  .legal-tab thead {
+    display: none;
+  }
+  .legal-tab tr {
+    margin-bottom: 10px;
+  }
+  .aviso-cookies {
+    bottom: calc(var(--navh) + 10px + env(safe-area-inset-bottom, 0px));
+  }
+}
     </style>
   </head>
   <body>
+<a class="pular" href="#conteudo" id="pular">Pular para o conteúdo</a>
 <div id="lobby" hidden></div>
 
 <div id="vtt" hidden>
@@ -5450,7 +5595,7 @@ textarea,
 <div id="dicePops" aria-live="polite"></div>
 <div id="audios" hidden></div>
 <div id="modalHost"></div>
-<div id="toastHost"></div>
+<div id="toastHost" aria-live="polite"></div>
 <input type="file" id="fileIn" accept="image/*" hidden>
 
 <!-- Firebase (SDK compat, carregado do Google) -->
@@ -7958,6 +8103,10 @@ function fail(e) {
 
 /* ===================== INÍCIO ===================== */
 async function boot() {
+  // acessibilidade e privacidade valem em todas as telas (legal/legal.js)
+  janelasAcessiveis();
+  $("#pular").onclick = pularParaConteudo;
+  avisoCookies();
   const configured =
     window.firebase && FIREBASE_CONFIG.projectId && FIREBASE_CONFIG.projectId !== "COLE_AQUI";
   if (!configured) {
@@ -8010,6 +8159,13 @@ function start() {
   });
 }
 function route() {
+  const pg = location.hash.slice(1);
+  if (LEGAL_PAGINAS[pg]) {
+    // páginas legais (legal/legal.js): no lugar do início, saindo da mesa se estava numa
+    S.gate = null;
+    if (S.mesaId) leaveMesa(false);
+    return paginaLegal(pg);
+  }
   const m = location.hash.match(/^#mesa-([A-Z0-9]{4,10})$/);
   if (!m) S.gate = null;
   if (m && m[1] !== S.mesaId) enterMesa(m[1]);
@@ -8170,18 +8326,20 @@ function showLobby() {
   L.innerHTML = `<div class="lwrap">
    <div class="row between"><div class="brand">${I.logo()}<div>Simula Assimilação<small>Assimilação RPG · mesa virtual</small></div></div>
     <div class="who">${S.testMode ? '<span class="tag red">Modo de teste</span>' : anon ? `Convidado neste aparelho <button class="btn sm" id="btnGoogle">Entrar com Google</button>` : S.authUser ? `Conectado como ${esc(S.authUser.displayName || S.authUser.email || "jogador")} <button class="btn sm ghost" id="btnSair">Sair</button>` : ""}</div></div>
+   <main id="conteudo" tabindex="-1">
    <section class="hero">
     <div class="stack"><span class="label">Mesa virtual de Assimilação RPG</span>
      <h1>Sobreviva ao <em>Colapso</em><br>com os seus <b>Infectados</b>.</h1>
      <p>Fichas de Infectado com as regras do livro, dados de Sucesso, Adaptação e Pressão que todo mundo vê na hora, cartas de Assimilação, Conflitos, Refúgio, cenas e mapas com tokens. Crie uma mesa e mande o link para o grupo.</p>
      <div class="feats">${["Fichas de Infectado", "Dados de símbolos", "Cartas de Assimilação", "Conflitos", "Refúgio", "Cenas e tokens"].map(x => `<span class="tag on">${x}</span>`).join("")}</div>
     </div>
-    <form class="box stack" id="fNova"><h3>Nova mesa</h3>
+    <form class="box stack" id="fNova"><h2 class="h3">Nova mesa</h2>
      <div class="field"><label class="label" for="nmMesa">Nome da campanha</label><input type="text" id="nmMesa" maxlength="60" placeholder="Ex.: Vale dos Montes Castanhos" required></div>
      <div class="field"><label class="label" for="dsMesa">Descrição curta</label><input type="text" id="dsMesa" maxlength="120" placeholder="Ex.: 10 anos depois do Colapso"></div>
      <div class="field"><label class="label" for="acMesa">Quem pode entrar</label><select id="acMesa"><option value="livre">Quem tiver o link ou o código</option><option value="senha">Só com senha</option><option value="aprovacao">Só quem eu aprovar</option></select></div>
      <div class="field" id="snWrap" hidden><label class="label" for="snMesa">Senha da mesa</label><input type="text" id="snMesa" maxlength="40" autocomplete="off"></div>
      <label class="check"><input type="checkbox" id="lsMesa"> Mostrar na lista pública do site</label>
+     ${consentimentoHTML("csMesa", "O nome e a descrição da mesa ficam guardados para a mesa funcionar e aparecem para quem entra nela.")}
      <button class="btn primary">Criar mesa como mestre</button>
      <div class="sub">Já tem um código?</div>
      <div class="row"><input type="text" id="codeIn" placeholder="Ex.: ASK7RQ2" maxlength="10" style="flex:1;text-transform:uppercase"><button type="button" class="btn" id="btnEntrar">Entrar</button></div>
@@ -8210,8 +8368,10 @@ function showLobby() {
    ${visited.length ? `<section class="stack" style="margin-top:26px"><h2>Mesas em que você joga</h2><div class="mesas">${visited.map(card).join("")}</div></section>` : ""}
    <section class="stack" style="margin-top:26px"><h2>Mesas públicas</h2>${others.length ? `<div class="mesas">${others.map(card).join("")}</div>` : `<div class="empty">${S.loaded.lobby ? (S.lobbyErr ? "Não consegui carregar a lista de mesas." : "Nenhuma mesa pública agora. As mesas de grupos de amigos ficam fora desta lista e entram pelo link.") : "Carregando mesas…"}</div>`}</section>
    ${anon ? `<p class="muted small" style="margin-top:30px">Como convidado, você é reconhecido só neste navegador. Entre com Google para ser o mesmo jogador (e o mesmo mestre) em qualquer aparelho.</p>` : ""}
-   <footer class="foot">Simula Assimilação é um projeto de fã, gratuito e sem fins lucrativos, feito por wasmorf. Não é um produto oficial nem tem ligação com a New Order Editora. Assimilação RPG e seus símbolos pertencem aos seus donos. Para jogar, use o Livro de Regras oficial.</footer>
+   </main>
+   ${rodapeHTML()}
   </div>`;
+  bindLegal(L);
   $$("[data-mesa]").forEach(
     b =>
       (b.onclick = () => {
@@ -8362,6 +8522,14 @@ async function trocarUsuario(u) {
   subscribeMeus();
 }
 async function googleLogin() {
+  // antes de entrar, diz o que a conta Google traz e para quê, e pede o consentimento (LGPD)
+  const ok = await formBox(
+    "Entrar com Google",
+    `<p style="margin:0">Ao entrar, o site recebe da sua conta Google o nome, o e-mail e a foto. Eles servem só para mostrar quem está conectado e para você ter as suas mesas e personagens em qualquer aparelho. Nada é vendido nem usado para anúncios.</p>
+     ${consentimentoHTML("csGoogle", "Você pode sair da conta ou apagar os seus dados quando quiser, em Meus dados.")}`,
+    "Continuar com Google"
+  );
+  if (!ok) return;
   const auth = firebase.auth();
   const prov = new firebase.auth.GoogleAuthProvider();
   try {
@@ -8519,6 +8687,7 @@ async function enterMesa(id) {
   telaPorta(`${porta.capa ? `<img class="porta-capa" src="${porta.capa}" alt="">` : ""}<span class="label">Mesa ${esc(id)}</span><h2>${esc(porta.nome)}</h2>${porta.desc ? `<p class="muted" style="margin:0">${esc(porta.desc)}</p>` : ""}
     <form class="stack" id="fPorta"><div class="field"><label class="label" for="pNome">Seu nome (o mestre vê)</label><input type="text" id="pNome" maxlength="40" value="${esc(nome0)}" required></div>
     ${ac === "senha" ? `<div class="field"><label class="label" for="pSenha">Senha da mesa</label><input type="text" id="pSenha" maxlength="40" autocomplete="off" required></div>` : ""}
+    ${consentimentoHTML("csPorta", "Seu nome serve só para o mestre e os jogadores desta mesa saberem quem você é.")}
     <button class="btn primary">${ac === "aprovacao" ? "Pedir para entrar" : "Entrar na mesa"}</button></form>
     ${ac === "aprovacao" ? `<p class="muted small" style="margin:0">O mestre precisa aprovar a sua entrada.</p>` : ""}`);
   $("#fPorta").onsubmit = async ev => {
@@ -10655,7 +10824,9 @@ function renderBoardTop() {
     if (S.isM && live && !isLive) h += `<button class="btn sm" id="btBack">Voltar à cena exibida</button>`;
   }
   const tc = S.trilha && S.trilha.tocando;
-  if (tc)
+  if (tc && MZ.semCookies && ytId(tc.src))
+    h += `<button class="btn sm" id="btCk" title="As músicas do YouTube só tocam com os cookies de terceiros aceitos">♪ Ouvir: aceitar cookies do YouTube</button>`;
+  else if (tc)
     h += MZ.bloqueado
       ? `<button class="btn sm primary" id="btSom">♪ Ativar som da mesa</button>`
       : `<button class="chip" id="btTr" style="cursor:pointer;color:var(--fg)">♪ ${esc(tc.titulo || "Trilha")}${tc.play ? "" : " (pausada)"}</button>`;
@@ -10663,6 +10834,8 @@ function renderBoardTop() {
   top.innerHTML = h;
   const bs = $("#btSom");
   if (bs) bs.onclick = destravarSom;
+  const bc = $("#btCk");
+  if (bc) bc.onclick = () => janelaLegal("cookies");
   const bt = $("#btTr");
   if (bt) bt.onclick = () => openTool("trilha");
   const b = $("#btLive");
@@ -15263,6 +15436,15 @@ function aplicarTrilha() {
 }
 function carregarYT(cb) {
   if (MZ.ytReady) return cb();
+  // o YouTube usa cookies dele: só carrega se a pessoa aceitou os cookies de terceiros (legal/legal.js)
+  if (!cookiesTerceiros()) {
+    if (!MZ.semCookies) {
+      MZ.semCookies = true;
+      toast("A música da mesa vem do YouTube. Para ouvir, aceite os cookies de terceiros.");
+      if (S.mesaId) renderBoardTop();
+    }
+    return;
+  }
   (MZ.ytQ = MZ.ytQ || []).push(cb);
   if (MZ.ytLoading) return;
   MZ.ytLoading = true;
@@ -15277,6 +15459,7 @@ function carregarYT(cb) {
   }
   window.onYouTubeIframeAPIReady = () => {
     MZ.yt = new YT.Player("ytP", {
+      host: "https://www.youtube-nocookie.com", // modo de privacidade aprimorada
       width: 1,
       height: 1,
       playerVars: { autoplay: 1, controls: 0, playsinline: 1 },
@@ -27060,7 +27243,14 @@ function ajudaHTML() {
   return `<div class="tabs2">${Object.entries(AJUDA)
     .map(([k, a]) => `<button data-ajt="${k}" aria-pressed="${t === k}">${a.nome}</button>`)
     .join("")}</div>
-   <div class="stack" style="gap:8px">${AJUDA[t].itens.map(([h, p], i) => `<details class="box aj" ${i < 2 ? "open" : ""}><summary><b>${h}</b></summary><p>${p}</p></details>`).join("")}${relatorioHTML()}</div>`;
+   <div class="stack" style="gap:8px">${AJUDA[t].itens.map(([h, p], i) => `<details class="box aj" ${i < 2 ? "open" : ""}><summary><b>${h}</b></summary><p>${p}</p></details>`).join("")}${relatorioHTML()}
+   <div class="box stack"><b>Privacidade e regras</b><nav class="legal-links" aria-label="Informações legais">${Object.keys(
+     LEGAL_PAGINAS
+   )
+     .map(k => legalLink(k))
+     .join(
+       ""
+     )}</nav><span class="muted small">Um projeto do ${ZART.nome} · Contato: ${contato()}</span></div></div>`;
 }
 function bindAjuda() {
   $$("[data-ajt]").forEach(
@@ -27071,13 +27261,15 @@ function bindAjuda() {
       })
   );
   bindRelatorio(); // "Algo deu errado?" (nucleo/erros.js)
+  bindLegal($("#pbody")); // links de privacidade e regras (legal/legal.js)
 }
 function ajudaModal() {
   const h = $("#modalHost");
   const r = () => {
-    h.innerHTML = `<div class="modal-back"><div class="modal" style="max-width:640px" role="dialog" aria-label="Como usar"><div class="row between"><h3 style="margin:0">Como usar o Simula Assimilação</h3><button class="btn sm" id="ajX">Fechar</button></div>${ajudaHTML()}</div></div>`;
+    h.innerHTML = `<div class="modal-back"><div class="modal" style="max-width:640px" role="dialog" aria-label="Como usar"><div class="row between"><h3 style="margin:0">Como usar o Simula Assimilação</h3><button class="btn sm" id="ajX" data-fechar>Fechar</button></div>${ajudaHTML()}</div></div>`;
     $("#ajX").onclick = () => (h.innerHTML = "");
     bindRelatorio();
+    bindLegal(h);
     $$("[data-ajt]").forEach(
       b =>
         (b.onclick = () => {
@@ -29474,46 +29666,51 @@ async function apagarMesa(id, nome) {
     return;
   }
   toast("Apagando a mesa…");
-  const p = "mesas/" + id;
   try {
     if (S.mesaId === id) {
       location.hash = "";
       await new Promise(z => setTimeout(z, 300));
     }
-    for (const col of MESA_SUBCOLS) {
-      let docs = [];
-      try {
-        docs = await S.db.getCol(p + "/" + col);
-      } catch (e) {}
-      for (const d of docs) {
-        try {
-          await S.db.del(p + "/" + col + "/" + d.id);
-        } catch (e) {}
-      }
-    }
-    try {
-      await S.db.del("portas/" + id);
-    } catch (e) {}
-    await S.db.del(p);
-    try {
-      await S.db.del("usuarios/" + S.uid + "/mesas/" + id);
-    } catch (e) {}
-    // as fichas dessa mesa saem de Meus personagens (a mesa não existe mais)
-    for (const c of (S.meus || []).filter(x => x.mesaId === id))
-      await S.db.del("usuarios/" + S.uid + "/fichas/" + c.id).catch(() => {});
-    try {
-      const L = lsGet("sa_visitadas", []);
-      if (Array.isArray(L))
-        lsSet(
-          "sa_visitadas",
-          L.filter(x => x !== id)
-        );
-    } catch (e) {}
+    await apagarMesaDados(id);
     toast("Mesa apagada.");
     if (!S.mesaId) showLobby();
   } catch (e) {
     fail(e);
   }
+}
+/* Apaga a mesa inteira do banco (sem perguntar): tudo dentro dela, a porta, e ela sai das listas do
+   mestre. Usado por apagarMesa e por "Apagar todos os meus dados" (legal/legal.js). */
+async function apagarMesaDados(id) {
+  const p = "mesas/" + id;
+  for (const col of MESA_SUBCOLS) {
+    let docs = [];
+    try {
+      docs = await S.db.getCol(p + "/" + col);
+    } catch (e) {}
+    for (const d of docs) {
+      try {
+        await S.db.del(p + "/" + col + "/" + d.id);
+      } catch (e) {}
+    }
+  }
+  try {
+    await S.db.del("portas/" + id);
+  } catch (e) {}
+  await S.db.del(p);
+  try {
+    await S.db.del("usuarios/" + S.uid + "/mesas/" + id);
+  } catch (e) {}
+  // as fichas dessa mesa saem de Meus personagens (a mesa não existe mais)
+  for (const c of (S.meus || []).filter(x => x.mesaId === id))
+    await S.db.del("usuarios/" + S.uid + "/fichas/" + c.id).catch(() => {});
+  try {
+    const L = lsGet("sa_visitadas", []);
+    if (Array.isArray(L))
+      lsSet(
+        "sa_visitadas",
+        L.filter(x => x !== id)
+      );
+  } catch (e) {}
 }
 async function retirarFicha(id) {
   if (toqueDuplo("retirarFicha")) return; // evita rodar duas vezes num toque duplo
@@ -29706,7 +29903,7 @@ function bindFichaAcoes(f, id) {
 }
 /* apagar mesa também pelo Escudo */
 function escudoApagarHTML() {
-  return `<details class="box"><summary style="cursor:pointer"><b style="color:var(--red)">Apagar esta mesa</b></summary><div class="stack" style="margin-top:10px"><p class="muted small" style="margin:0">Some tudo para todos e não dá para desfazer. Baixe o backup antes se quiser guardar.</p><button class="btn danger" id="btnApagarMesa">Apagar a mesa ${esc(S.mesaId || "")}</button></div></details>`;
+  return `<details class="box"><summary style="cursor:pointer"><b style="color:var(--red-hi)">Apagar esta mesa</b></summary><div class="stack" style="margin-top:10px"><p class="muted small" style="margin:0">Some tudo para todos e não dá para desfazer. Baixe o backup antes se quiser guardar.</p><button class="btn danger" id="btnApagarMesa">Apagar a mesa ${esc(S.mesaId || "")}</button></div></details>`;
 }
 function bindEscudoApagar() {
   const b = $("#btnApagarMesa");
@@ -30354,7 +30551,7 @@ function capasNoLobby() {
 /* Versão do site e aviso de versão nova. */
 // prettier-ignore
 // (sem espaços de propósito: versões antigas do site procuram exatamente este formato)
-const VERSAO_SITE="18/11 09h1030";
+const VERSAO_SITE="25/11 20h5010";
 /* Avisa quando sai uma versão nova do site (o navegador às vezes guarda a antiga) */
 (() => {
   let avisou = false;
@@ -31702,6 +31899,399 @@ async function clicarNoMural(it) {
   if (it.tipo === "doc")
     abrirDoc({ id: it.id, titulo: it.titulo, doc: it.doc, quem: it.autorNome, para: "todos", mural: it });
   else if (it.autor === S.uid || S.isM) notaMural(it);
+}
+</script>
+<script>
+"use strict";
+/* Páginas legais e privacidade (LGPD e Código de Defesa do Consumidor): Política de Privacidade, Termos
+   de Uso, Cookies, Reembolso e Meus dados (baixar e apagar os seus dados). Abrem como página no início
+   do site (#privacidade, #termos, #cookies, #reembolso, #meus-dados) e como janela dentro da mesa (Ajuda),
+   para ninguém sair da mesa no meio do jogo. Também: o aviso de cookies, a caixa de consentimento dos
+   formulários, o rodapé com o responsável e o link "Pular para o conteúdo". */
+
+const ZART = { nome: "Grupo Zart", email: "projetozart@gmail.com" };
+const LEGAL_DATA = "25 de novembro de 2026";
+const LEGAL_PAGINAS = {
+  privacidade: "Política de Privacidade",
+  termos: "Termos de Uso",
+  cookies: "Cookies e armazenamento",
+  reembolso: "Política de Reembolso",
+  "meus-dados": "Meus dados"
+};
+const legalLink = (pg, txt) => `<a href="#${pg}" data-legal="${pg}">${esc(txt || LEGAL_PAGINAS[pg])}</a>`;
+const contato = () => `<a href="mailto:${ZART.email}">${ZART.email}</a>`;
+
+/* ---------- o texto de cada página ---------- */
+function legalHTML(pg) {
+  if (pg === "privacidade")
+    return `<p class="legal-data">Atualizada em ${LEGAL_DATA}.</p>
+<p>Esta política explica quais dados o Simula Assimilação guarda, para quê, com quem eles são compartilhados, por quanto tempo ficam guardados e como você exerce os seus direitos, de acordo com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018, a LGPD).</p>
+<h2>Quem é o responsável</h2>
+<p>O responsável (controlador) pelos dados é o <b>${ZART.nome}</b>. Para qualquer assunto de privacidade, escreva para ${contato()}. Esse é o nosso canal com quem usa o site.</p>
+<h2>Quais dados guardamos e para quê</h2>
+<table class="legal-tab"><thead><tr><th scope="col">Dado</th><th scope="col">Para quê</th><th scope="col">Base legal (LGPD)</th></tr></thead><tbody>
+<tr><td>Identificador da conta, criado automaticamente pelo Firebase quando você abre o site (login anônimo)</td><td>Reconhecer você neste navegador, para que suas mesas e fichas continuem suas</td><td>Execução do serviço que você pediu (art. 7º, V)</td></tr>
+<tr><td>Nome, e-mail e foto da sua conta Google, só se você escolher "Entrar com Google"</td><td>Mostrar quem está conectado e levar seus personagens e mesas para outros aparelhos</td><td>Consentimento (art. 7º, I)</td></tr>
+<tr><td>O nome que você digita para entrar numa mesa</td><td>Mostrar ao mestre e aos jogadores daquela mesa quem é você</td><td>Execução do serviço (art. 7º, V)</td></tr>
+<tr><td>O que você cria: mesas, fichas, fotos e imagens que você sobe, documentos, anotações, mapas, mensagens e rolagens</td><td>Fazer a mesa funcionar e mostrar esse conteúdo a quem participa dela</td><td>Execução do serviço (art. 7º, V)</td></tr>
+<tr><td>Preferências guardadas no seu navegador (veja ${legalLink("cookies", "Cookies")})</td><td>Lembrar suas escolhas, como o visual do dado e o som</td><td>Legítimo interesse, só para o site funcionar (art. 7º, IX)</td></tr>
+</tbody></table>
+<p>Não pedimos CPF, endereço, telefone, dados de pagamento nem a sua localização. O site não tem anúncios, não usa Google Analytics, pixels nem outras ferramentas de rastreamento, e não vende nenhum dado.</p>
+<h2>Com quem os dados são compartilhados</h2>
+<ul>
+<li><b>Google Firebase</b> (Google LLC): guarda as mesas e faz o login. Os servidores podem ficar fora do Brasil; o Google segue cláusulas de proteção de dados nessa transferência internacional (art. 33 da LGPD).</li>
+<li><b>GitHub Pages</b> (GitHub, Inc.): hospeda o site. Como todo servidor, registra dados técnicos de acesso, como o endereço IP.</li>
+<li><b>Google Fonts</b>: entrega as fontes do site. Para isso, o Google recebe o endereço IP de quem abre a página.</li>
+<li><b>YouTube</b>: só quando o mestre toca uma música do YouTube na trilha sonora <i>e</i> você aceitou os cookies de terceiros. Usamos o modo de privacidade aprimorada do YouTube.</li>
+<li><b>Quem participa da mesa</b>: o mestre e os jogadores veem o que é mostrado na mesa. O mestre vê também o que é dele ver (fichas, rolagens secretas mandadas para ele).</li>
+</ul>
+<p>Fora isso, só compartilhamos dados se uma lei ou uma ordem judicial exigir.</p>
+<h2>Por quanto tempo os dados ficam guardados</h2>
+<ul>
+<li>Mesas e tudo o que há nelas: até o mestre apagar a mesa, ou até você pedir a exclusão.</li>
+<li>Seus personagens e o índice das suas mesas: até você apagar, ou até você pedir a exclusão.</li>
+<li>Preferências do navegador: até você limpar os dados do site no navegador ou apagar em ${legalLink("meus-dados", "Meus dados")}.</li>
+<li>Registros técnicos de acesso da hospedagem: pelo tempo definido pelo GitHub e pelo Google.</li>
+</ul>
+<h2>Seus direitos</h2>
+<p>Pela LGPD (art. 18), você pode: confirmar se tratamos seus dados; ter acesso a eles; corrigir dados incompletos ou errados; pedir anonimização, bloqueio ou eliminação; levar seus dados para outro serviço (portabilidade); saber com quem eles são compartilhados; e retirar o seu consentimento a qualquer momento.</p>
+<ul>
+<li><b>Acessar e levar seus dados:</b> em ${legalLink("meus-dados", "Meus dados")}, toque em "Baixar meus dados". Cada mesa sua também tem o backup no Escudo do mestre.</li>
+<li><b>Corrigir:</b> edite sua ficha, seu personagem ou a sua mesa direto no site.</li>
+<li><b>Apagar:</b> em ${legalLink("meus-dados", "Meus dados")}, toque em "Apagar todos os meus dados".</li>
+<li><b>Retirar o consentimento:</b> saia da conta Google ou mude a sua escolha em ${legalLink("cookies", "Cookies")}.</li>
+<li><b>Qualquer outro pedido</b> ou dúvida: escreva para ${contato()}. Respondemos em até 15 dias.</li>
+</ul>
+<p>Se achar que seus direitos não foram respeitados, você também pode reclamar na Autoridade Nacional de Proteção de Dados (ANPD), em gov.br/anpd.</p>
+<h2>Segurança</h2>
+<p>Os dados ficam no Firebase, com regras que deixam cada mesa visível só para quem participa dela, e cada ficha editável só pelo dono e pelo mestre. A conexão com o site é criptografada (HTTPS). Nenhum sistema é 100% seguro: se acontecer um incidente que possa trazer risco a você, avisaremos você e a ANPD, como manda a lei.</p>
+<h2>Crianças e adolescentes</h2>
+<p>O site não é feito para crianças. Quem tem menos de 18 anos deve usar com o conhecimento dos pais ou responsáveis, e menores de 12 anos só com o consentimento deles (art. 14 da LGPD). Se um responsável quiser apagar os dados de um menor, escreva para ${contato()}.</p>
+<h2>Mudanças nesta política</h2>
+<p>Se esta política mudar, a data no começo da página muda junto, e mudanças importantes serão avisadas no site.</p>`;
+
+  if (pg === "termos")
+    return `<p class="legal-data">Atualizados em ${LEGAL_DATA}.</p>
+<p>Estes termos são as regras para usar o Simula Assimilação, uma mesa virtual gratuita para jogar Assimilação RPG com os amigos. Ao usar o site, você concorda com eles e com a ${legalLink("privacidade")}.</p>
+<h2>1. O serviço</h2>
+<p>O Simula Assimilação é um projeto de fã, gratuito e sem fins lucrativos, mantido pelo ${ZART.nome}. Ele oferece fichas, rolagens, cenas, mapas, documentos, Conflitos e Refúgio. O site é oferecido como está: fazemos o possível para ele funcionar bem, mas não dá para prometer que nunca vai sair do ar ou ter erros. Baixe o backup das suas mesas no Escudo do mestre de vez em quando.</p>
+<h2>2. Não é um produto oficial</h2>
+<p>O Simula Assimilação não é oficial e não tem ligação com a New Order Editora. Assimilação RPG, seus nomes, símbolos e logo pertencem aos seus donos. O site usa os nomes e os números das regras só para ajudar a jogar; para conhecer as regras completas, use o Livro de Regras oficial.</p>
+<h2>3. Sua conta</h2>
+<p>Ao abrir o site, você recebe uma conta de convidado guardada neste navegador. Se entrar com Google, suas mesas e personagens passam a valer em qualquer aparelho. Cuide do acesso à sua conta Google: o que for feito com ela no site é de sua responsabilidade.</p>
+<h2>4. O que você pode e o que não pode fazer</h2>
+<p>Use o site para jogar e preparar suas mesas. Não é permitido:</p>
+<ul>
+<li>publicar conteúdo ilegal, de ódio, discriminatório, de assédio, violência real contra pessoas, ou qualquer conteúdo sexual envolvendo menores;</li>
+<li>subir imagens, textos ou músicas que você não tem direito de usar, ou expor dados pessoais de outras pessoas sem autorização;</li>
+<li>usar nomes de mesa ofensivos na lista pública de mesas;</li>
+<li>tentar invadir, sobrecarregar, copiar em massa ou atrapalhar o site, as mesas de outras pessoas ou o banco de dados;</li>
+<li>cobrar de outras pessoas pelo acesso ao site ou se passar pelo ${ZART.nome}.</li>
+</ul>
+<h2>5. O que você cria</h2>
+<p>As fichas, mesas, imagens e textos que você cria continuam seus. Você nos autoriza apenas a guardar e mostrar esse conteúdo para quem participa da mesa, que é o que faz o site funcionar. Você é responsável pelo que sobe: se subir arte de outra pessoa, tenha a permissão dela. O mestre de cada mesa pode apagar o que estiver na mesa dele.</p>
+<h2>6. Conteúdo de terceiros</h2>
+<p>As músicas livres da trilha sonora são de Kevin MacLeod (incompetech.com), com licença Creative Commons BY 4.0. As fontes vêm do Google Fonts, com licenças livres. Os vídeos do YouTube tocados pelo mestre seguem as regras do YouTube.</p>
+<h2>7. Remoção de conteúdo</h2>
+<p>Podemos tirar do ar conteúdo que desrespeite estes termos ou a lei, e retirar da lista pública mesas com nomes impróprios. Para denunciar algo, escreva para ${contato()}.</p>
+<h2>8. Responsabilidade</h2>
+<p>Como o serviço é gratuito e oferecido como está, não respondemos por perda de dados causada por falhas de terceiros (como o Firebase ou o seu navegador), nem pelo que os usuários publicam nas próprias mesas, sempre dentro do que a lei brasileira permite. Nada nestes termos tira os direitos que o Código de Defesa do Consumidor garante a você.</p>
+<h2>9. Mudanças e fim do serviço</h2>
+<p>Estes termos podem mudar; a data no começo da página mostra a versão. Se o site for encerrado, avisaremos com antecedência para você baixar os seus dados.</p>
+<h2>10. Lei e foro</h2>
+<p>Valem as leis do Brasil. Qualquer disputa pode ser levada ao foro do seu domicílio, como garante o Código de Defesa do Consumidor. Antes disso, fale com a gente em ${contato()}.</p>`;
+
+  if (pg === "cookies")
+    return `<p class="legal-data">Atualizada em ${LEGAL_DATA}.</p>
+<p>O Simula Assimilação não usa cookies de anúncio nem de estatística. Ele guarda algumas informações no seu navegador (armazenamento local) para funcionar, e só carrega conteúdo de terceiros que usa cookies, o YouTube, se você aceitar.</p>
+<h2>Essenciais (sempre ligados)</h2>
+<ul>
+<li><b>Login do Firebase</b>: mantém você conectado e reconhece a sua conta neste navegador.</li>
+<li><b>Preferências do site</b>: seu nome nas mesas, mesas visitadas, visual e som do dado, se a ajuda já foi vista e sua escolha sobre cookies.</li>
+</ul>
+<p>Sem eles, o site não funciona. Eles ficam só no seu navegador e não servem para rastrear você.</p>
+<h2>De terceiros (só com a sua permissão)</h2>
+<ul>
+<li><b>YouTube</b>: quando o mestre toca uma música do YouTube na trilha sonora, o player do YouTube pode guardar cookies dele. Usamos o modo de privacidade aprimorada (youtube-nocookie.com), mas ele só carrega se você aceitar.</li>
+</ul>
+<h2>Sua escolha agora</h2>
+<p id="ckAgora" aria-live="polite">${cookiesTxt()}</p>
+<div class="row"><button type="button" class="btn primary" data-ck="aceito">Aceitar cookies de terceiros</button><button type="button" class="btn" data-ck="recusado">Recusar</button></div>
+<p class="muted small">Você também pode apagar tudo o que o site guardou limpando os dados do site nas configurações do navegador.</p>`;
+
+  if (pg === "reembolso")
+    return `<p class="legal-data">Atualizada em ${LEGAL_DATA}.</p>
+<p><b>O Simula Assimilação é gratuito.</b> Não vendemos nada no site: não há assinatura, plano pago, compra dentro do site nem cobrança de nenhum tipo. Por isso, hoje não existe o que cancelar ou reembolsar.</p>
+<h2>Se alguém cobrar</h2>
+<p>Ninguém está autorizado a cobrar pelo Simula Assimilação em nome do ${ZART.nome}. Se alguém pedir dinheiro para você usar o site, não pague e avise em ${contato()}.</p>
+<h2>Se um dia houver algo pago</h2>
+<p>Se o site passar a vender alguma coisa, estas regras vão valer:</p>
+<ul>
+<li><b>Direito de arrependimento:</b> você poderá desistir da compra em até 7 dias, contados da compra ou do recebimento, sem precisar dar motivo, como garante o art. 49 do Código de Defesa do Consumidor.</li>
+<li><b>Reembolso integral:</b> o valor pago volta inteiro, pelo mesmo meio de pagamento, sem custo para você.</li>
+<li><b>Como pedir:</b> por e-mail, em ${contato()}, com o e-mail usado na compra.</li>
+<li>Antes de qualquer cobrança, esta página será atualizada com o preço, o que está incluído e os dados de quem vende.</li>
+</ul>`;
+
+  if (pg === "meus-dados")
+    return `<p>Aqui você exerce os seus direitos da LGPD sem precisar pedir a ninguém. Veja também a ${legalLink("privacidade")}.</p>
+<h2>Baixar meus dados</h2>
+<p>Um arquivo (JSON) com a sua conta, o índice das suas mesas, seus personagens, suas fichas nas mesas, suas artes do bestiário, suas anotações e as preferências guardadas neste navegador. Para o conteúdo completo de uma mesa sua, use o backup no Escudo do mestre.</p>
+<button type="button" class="btn primary" id="mdBaixar">Baixar meus dados</button>
+<h2>Apagar todos os meus dados</h2>
+<p>Apaga: as mesas em que você é o mestre (para todos os jogadores delas), suas fichas nas mesas dos outros, sua entrada nessas mesas, seus personagens, suas artes, suas anotações, as preferências deste navegador e a sua conta. <b>Não dá para desfazer.</b> Se você usa outro site do ${ZART.nome} com a mesma conta, o que está lá também é apagado.</p>
+<p class="muted small">As rolagens e mensagens que você mandou em mesas de outras pessoas fazem parte do histórico delas. O mestre de cada mesa pode apagá-las, ou você pode pedir a exclusão em ${contato()}.</p>
+<button type="button" class="btn danger" id="mdApagar">Apagar todos os meus dados</button>
+<h2>Corrigir</h2>
+<p>Edite sua ficha, seu personagem ou a sua mesa direto no site. Para corrigir o nome ou a foto da conta Google, mude na própria conta Google.</p>`;
+  return "";
+}
+
+/* ---------- página (início do site) e janela (dentro da mesa) ---------- */
+function paginaLegal(pg) {
+  const L = $("#lobby");
+  $("#vtt").hidden = true;
+  L.hidden = false;
+  document.title = LEGAL_PAGINAS[pg] + " · Simula Assimilação";
+  L.innerHTML = `<div class="lwrap legal"><div class="row between"><div class="brand">${I.logo()}<div>Simula Assimilação<small>Um projeto do ${ZART.nome}</small></div></div><a class="btn sm" href="#">Voltar ao início</a></div>
+   <main id="conteudo" tabindex="-1" class="legal-txt"><h1>${LEGAL_PAGINAS[pg]}</h1>${legalHTML(pg)}</main>
+   ${rodapeHTML()}</div>`;
+  bindLegal(L);
+  window.scrollTo(0, 0);
+  $("#conteudo").focus();
+}
+function janelaLegal(pg) {
+  const h = $("#modalHost");
+  h.innerHTML = `<div class="modal-back"><div class="modal legal-modal" role="dialog" aria-modal="true" aria-labelledby="lgTit"><div class="row between"><h2 id="lgTit" style="margin:0">${LEGAL_PAGINAS[pg]}</h2><button type="button" class="btn sm" id="mNo">Fechar</button></div><div class="legal-txt">${legalHTML(pg)}</div></div></div>`;
+  $("#mNo").onclick = () => (h.innerHTML = "");
+  bindLegal(h);
+}
+/* Os links entre as páginas legais e os botões de cookies e de Meus dados */
+function bindLegal(raiz) {
+  $$("[data-legal]", raiz).forEach(
+    a =>
+      (a.onclick = ev => {
+        if (S.mesaId) {
+          ev.preventDefault(); // dentro da mesa, abre por cima (sem sair da mesa)
+          janelaLegal(a.dataset.legal);
+        } else if (a.closest("#modalHost")) $("#modalHost").innerHTML = ""; // no início: vai para a página
+      })
+  );
+  $$("[data-ck]", raiz).forEach(
+    b =>
+      (b.onclick = () => {
+        cookiesEscolher(b.dataset.ck);
+        const t = $("#ckAgora");
+        if (t) t.textContent = cookiesTxt();
+      })
+  );
+  const bx = $("#mdBaixar", raiz);
+  if (bx) bx.onclick = () => meusDadosBaixar().catch(fail);
+  const ap = $("#mdApagar", raiz);
+  if (ap) ap.onclick = () => meusDadosApagar().catch(fail);
+}
+/* O rodapé do início do site e das páginas legais */
+function rodapeHTML() {
+  return `<footer class="foot legal-foot">
+   <p>Simula Assimilação é um projeto de fã, gratuito e sem fins lucrativos. Não é um produto oficial nem tem ligação com a New Order Editora. Assimilação RPG, seus símbolos e logo pertencem aos seus donos. Os textos de regras do site são resumos próprios; para jogar, use o Livro de Regras oficial.</p>
+   <p>Um projeto do ${ZART.nome}. Responsável: ${ZART.nome} · Contato: ${contato()}</p>
+   <nav class="legal-links" aria-label="Informações legais">${Object.keys(LEGAL_PAGINAS)
+     .map(k => legalLink(k))
+     .join("")}</nav></footer>`;
+}
+
+/* ---------- cookies ---------- */
+const cookiesEscolha = () => (lsGet("sa_cookies", null) || {}).v || "";
+const cookiesTerceiros = () => cookiesEscolha() === "aceito";
+const cookiesTxt = () =>
+  cookiesEscolha() === "aceito"
+    ? "Você aceitou os cookies de terceiros (YouTube)."
+    : cookiesEscolha() === "recusado"
+      ? "Você recusou os cookies de terceiros: as músicas do YouTube não tocam para você."
+      : "Você ainda não escolheu. Até escolher, nada de terceiros é carregado.";
+function cookiesEscolher(v) {
+  lsSet("sa_cookies", { v, ts: Date.now() });
+  const b = $("#avisoCookies");
+  if (b) b.remove();
+  toast(v === "aceito" ? "Cookies de terceiros aceitos." : "Cookies de terceiros recusados.");
+  // aceitou com uma música do YouTube tocando: começa a tocar agora
+  if (v === "aceito" && MZ.semCookies) {
+    MZ.semCookies = false;
+    aplicarTrilha();
+  }
+  if (S.mesaId) renderBoardTop();
+}
+/* O aviso na primeira visita (até a pessoa escolher) */
+function avisoCookies() {
+  if (cookiesEscolha() || $("#avisoCookies")) return;
+  const d = document.createElement("section");
+  d.id = "avisoCookies";
+  d.className = "aviso-cookies";
+  d.setAttribute("aria-label", "Aviso de cookies");
+  d.innerHTML = `<p>O Simula Assimilação guarda no seu navegador só o necessário para funcionar (login e preferências). Músicas do YouTube na trilha sonora usam cookies do YouTube e só tocam se você aceitar. Veja a ${legalLink("cookies", "página de cookies")} e a ${legalLink("privacidade")}.</p>
+   <div class="row"><button type="button" class="btn primary" data-ck="aceito">Aceitar</button><button type="button" class="btn" data-ck="recusado">Recusar</button></div>`;
+  document.body.appendChild(d);
+  bindLegal(d);
+}
+
+/* ---------- consentimento nos formulários ---------- */
+/* A caixa obrigatória dos formulários, com o uso dos dados e o link para a política */
+function consentimentoHTML(id, uso) {
+  return `<label class="check consent"><input type="checkbox" id="${id}" name="consent" required> <span>Li e aceito os ${legalLink("termos")} e a ${legalLink("privacidade")}. ${esc(uso)}</span></label>`;
+}
+
+/* ---------- Meus dados: baixar e apagar ---------- */
+const USUARIO_SUBS = ["mesas", "fichas", "personagens", "artes", "notasDoc"];
+async function meusDadosBaixar() {
+  if (!S.uid) return;
+  const u = S.authUser || {};
+  const out = {
+    geradoEm: new Date().toISOString(),
+    responsavel: ZART.nome,
+    conta: { id: S.uid, convidado: !!u.isAnonymous, nome: u.displayName || null, email: u.email || null },
+    navegador: {}
+  };
+  for (const c of USUARIO_SUBS) out[c] = await S.db.getCol(`usuarios/${S.uid}/${c}`).catch(() => []);
+  out.fichasNasMesas = [];
+  for (const x of out.fichas) {
+    const f = await S.db.get(`mesas/${x.mesaId}/fichas/${x.fichaId}`).catch(() => null);
+    if (f) out.fichasNasMesas.push({ mesa: x.mesaId, ficha: x.fichaId, dados: f });
+  }
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k.startsWith("sa_"))
+        out.navegador[k] = lsGet(k, null);
+    }
+  } catch (e) {}
+  baixar("meus-dados-simula-assimilacao.json", out);
+  toast("Arquivo com os seus dados baixado.");
+}
+async function meusDadosApagar() {
+  if (!S.uid) return;
+  const r = await formBox(
+    "Apagar todos os meus dados?",
+    `<p style="margin:0">Somem as mesas em que você é o mestre (para todos), suas fichas nas outras mesas, seus personagens, suas artes, suas anotações e a sua conta. <b>Não dá para desfazer.</b></p>
+     <p class="muted small" style="margin:0">Se quiser guardar alguma coisa, baixe antes os seus dados e o backup das suas mesas.</p>
+     <div class="field"><label class="label" for="mdConf">Para confirmar, escreva APAGAR</label><input type="text" id="mdConf" name="conf" autocomplete="off" required></div>`,
+    "Apagar tudo"
+  );
+  if (!r) return;
+  if (r.conf.trim().toUpperCase() !== "APAGAR") {
+    toast("A confirmação não confere. Nada foi apagado.");
+    return;
+  }
+  toast("Apagando os seus dados…");
+  if (S.mesaId) location.hash = "";
+  const uid = S.uid;
+  const minhas = await S.db.getCol(`usuarios/${uid}/mesas`).catch(() => []);
+  const mestre = new Set([
+    ...minhas.filter(m => m.papel === "mestre").map(m => m.id),
+    ...(S.mesas || []).filter(m => m.mestre === uid).map(m => m.id)
+  ]);
+  for (const id of mestre) await apagarMesaDados(id).catch(() => {});
+  // nas mesas dos outros: as minhas fichas e a minha entrada
+  const fichas = await S.db.getCol(`usuarios/${uid}/fichas`).catch(() => []);
+  for (const x of fichas)
+    if (!mestre.has(x.mesaId)) await S.db.del(`mesas/${x.mesaId}/fichas/${x.fichaId}`).catch(() => {});
+  for (const m of minhas.filter(m => !mestre.has(m.id))) {
+    await S.db.del(`mesas/${m.id}/membros/${uid}`).catch(() => {});
+    await S.db.del(`mesas/${m.id}/entrada/${uid}`).catch(() => {});
+  }
+  for (const c of USUARIO_SUBS)
+    for (const d of await S.db.getCol(`usuarios/${uid}/${c}`).catch(() => []))
+      await S.db.del(`usuarios/${uid}/${c}/${d.id}`).catch(() => {});
+  try {
+    Object.keys(localStorage)
+      .filter(k => k.startsWith("sa_") && k !== "sa_teste")
+      .forEach(k => localStorage.removeItem(k));
+  } catch (e) {}
+  // por último, a conta (o Google pode pedir para entrar de novo antes)
+  if (!S.testMode && window.firebase && firebase.auth().currentUser) {
+    try {
+      await firebase.auth().currentUser.delete();
+    } catch (e) {
+      await firebase
+        .auth()
+        .signOut()
+        .catch(() => {});
+      if (e.code === "auth/requires-recent-login") {
+        alert(
+          "Seus dados foram apagados. Para apagar também o login da conta Google, entre com Google de novo e repita, ou escreva para " +
+            ZART.email +
+            "."
+        );
+      }
+    }
+  }
+  toast("Seus dados foram apagados.");
+  setTimeout(() => {
+    location.hash = "";
+    if (S.testMode)
+      showLobby(); // no modo de teste, recarregar perderia o banco de mentira
+    else location.reload();
+  }, 900);
+}
+
+/* ---------- acessibilidade geral ---------- */
+/* "Pular para o conteúdo": vai para o conteúdo da tela (o início ou a mesa) sem mexer no endereço */
+function pularParaConteudo(ev) {
+  ev.preventDefault();
+  const alvo = S.mesaId ? $("#board") : $("#conteudo") || $("#lobby");
+  if (!alvo) return;
+  if (!alvo.hasAttribute("tabindex")) alvo.setAttribute("tabindex", "-1");
+  alvo.focus();
+}
+/* Janelas (modais): Esc fecha, o Tab fica dentro dela e o foco volta para onde estava ao fechar */
+function janelasAcessiveis() {
+  const host = $("#modalHost");
+  let antes = null;
+  new MutationObserver(() => {
+    const m = $(".modal", host);
+    if (m) {
+      if (!antes) antes = document.activeElement;
+      m.setAttribute("role", m.getAttribute("role") || "dialog");
+      m.setAttribute("aria-modal", "true");
+      const t = $("h1,h2,h3", m);
+      if (t && !m.hasAttribute("aria-label") && !m.hasAttribute("aria-labelledby")) {
+        t.id = t.id || "mTit" + Date.now();
+        m.setAttribute("aria-labelledby", t.id);
+      }
+      if (!m.contains(document.activeElement))
+        setTimeout(() => {
+          const f = $("input:not([type=hidden]),select,textarea,button", m);
+          if (f && !m.contains(document.activeElement)) f.focus();
+        }, 40);
+    } else if (antes) {
+      const a = antes;
+      antes = null;
+      if (a && document.contains(a)) a.focus();
+    }
+  }).observe(host, { childList: true, subtree: true });
+  document.addEventListener("keydown", e => {
+    const m = $(".modal", host);
+    if (!m) return;
+    if (e.key === "Escape") {
+      const fechar = $("#mNo", m) || $("[data-fechar],.x", m);
+      if (fechar) fechar.click();
+      else host.innerHTML = "";
+      e.preventDefault();
+    } else if (e.key === "Tab") {
+      const fs = $$(
+        "a[href],button:not([disabled]),input:not([disabled]):not([type=hidden]),select,textarea,[tabindex]:not([tabindex='-1'])",
+        m
+      ).filter(x => x.offsetParent);
+      if (!fs.length) return;
+      const [pri, ult] = [fs[0], fs[fs.length - 1]];
+      if (e.shiftKey && document.activeElement === pri) {
+        ult.focus();
+        e.preventDefault();
+      } else if (!e.shiftKey && document.activeElement === ult) {
+        pri.focus();
+        e.preventDefault();
+      }
+    }
+  });
 }
 </script>
 <script>

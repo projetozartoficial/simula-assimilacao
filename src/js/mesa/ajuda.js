@@ -156,7 +156,14 @@ function ajudaHTML() {
   return `<div class="tabs2">${Object.entries(AJUDA)
     .map(([k, a]) => `<button data-ajt="${k}" aria-pressed="${t === k}">${a.nome}</button>`)
     .join("")}</div>
-   <div class="stack" style="gap:8px">${AJUDA[t].itens.map(([h, p], i) => `<details class="box aj" ${i < 2 ? "open" : ""}><summary><b>${h}</b></summary><p>${p}</p></details>`).join("")}${relatorioHTML()}</div>`;
+   <div class="stack" style="gap:8px">${AJUDA[t].itens.map(([h, p], i) => `<details class="box aj" ${i < 2 ? "open" : ""}><summary><b>${h}</b></summary><p>${p}</p></details>`).join("")}${relatorioHTML()}
+   <div class="box stack"><b>Privacidade e regras</b><nav class="legal-links" aria-label="Informações legais">${Object.keys(
+     LEGAL_PAGINAS
+   )
+     .map(k => legalLink(k))
+     .join(
+       ""
+     )}</nav><span class="muted small">Um projeto do ${ZART.nome} · Contato: ${contato()}</span></div></div>`;
 }
 function bindAjuda() {
   $$("[data-ajt]").forEach(
@@ -167,13 +174,15 @@ function bindAjuda() {
       })
   );
   bindRelatorio(); // "Algo deu errado?" (nucleo/erros.js)
+  bindLegal($("#pbody")); // links de privacidade e regras (legal/legal.js)
 }
 function ajudaModal() {
   const h = $("#modalHost");
   const r = () => {
-    h.innerHTML = `<div class="modal-back"><div class="modal" style="max-width:640px" role="dialog" aria-label="Como usar"><div class="row between"><h3 style="margin:0">Como usar o Simula Assimilação</h3><button class="btn sm" id="ajX">Fechar</button></div>${ajudaHTML()}</div></div>`;
+    h.innerHTML = `<div class="modal-back"><div class="modal" style="max-width:640px" role="dialog" aria-label="Como usar"><div class="row between"><h3 style="margin:0">Como usar o Simula Assimilação</h3><button class="btn sm" id="ajX" data-fechar>Fechar</button></div>${ajudaHTML()}</div></div>`;
     $("#ajX").onclick = () => (h.innerHTML = "");
     bindRelatorio();
+    bindLegal(h);
     $$("[data-ajt]").forEach(
       b =>
         (b.onclick = () => {

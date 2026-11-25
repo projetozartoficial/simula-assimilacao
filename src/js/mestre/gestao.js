@@ -42,46 +42,51 @@ async function apagarMesa(id, nome) {
     return;
   }
   toast("Apagando a mesa…");
-  const p = "mesas/" + id;
   try {
     if (S.mesaId === id) {
       location.hash = "";
       await new Promise(z => setTimeout(z, 300));
     }
-    for (const col of MESA_SUBCOLS) {
-      let docs = [];
-      try {
-        docs = await S.db.getCol(p + "/" + col);
-      } catch (e) {}
-      for (const d of docs) {
-        try {
-          await S.db.del(p + "/" + col + "/" + d.id);
-        } catch (e) {}
-      }
-    }
-    try {
-      await S.db.del("portas/" + id);
-    } catch (e) {}
-    await S.db.del(p);
-    try {
-      await S.db.del("usuarios/" + S.uid + "/mesas/" + id);
-    } catch (e) {}
-    // as fichas dessa mesa saem de Meus personagens (a mesa não existe mais)
-    for (const c of (S.meus || []).filter(x => x.mesaId === id))
-      await S.db.del("usuarios/" + S.uid + "/fichas/" + c.id).catch(() => {});
-    try {
-      const L = lsGet("sa_visitadas", []);
-      if (Array.isArray(L))
-        lsSet(
-          "sa_visitadas",
-          L.filter(x => x !== id)
-        );
-    } catch (e) {}
+    await apagarMesaDados(id);
     toast("Mesa apagada.");
     if (!S.mesaId) showLobby();
   } catch (e) {
     fail(e);
   }
+}
+/* Apaga a mesa inteira do banco (sem perguntar): tudo dentro dela, a porta, e ela sai das listas do
+   mestre. Usado por apagarMesa e por "Apagar todos os meus dados" (legal/legal.js). */
+async function apagarMesaDados(id) {
+  const p = "mesas/" + id;
+  for (const col of MESA_SUBCOLS) {
+    let docs = [];
+    try {
+      docs = await S.db.getCol(p + "/" + col);
+    } catch (e) {}
+    for (const d of docs) {
+      try {
+        await S.db.del(p + "/" + col + "/" + d.id);
+      } catch (e) {}
+    }
+  }
+  try {
+    await S.db.del("portas/" + id);
+  } catch (e) {}
+  await S.db.del(p);
+  try {
+    await S.db.del("usuarios/" + S.uid + "/mesas/" + id);
+  } catch (e) {}
+  // as fichas dessa mesa saem de Meus personagens (a mesa não existe mais)
+  for (const c of (S.meus || []).filter(x => x.mesaId === id))
+    await S.db.del("usuarios/" + S.uid + "/fichas/" + c.id).catch(() => {});
+  try {
+    const L = lsGet("sa_visitadas", []);
+    if (Array.isArray(L))
+      lsSet(
+        "sa_visitadas",
+        L.filter(x => x !== id)
+      );
+  } catch (e) {}
 }
 async function retirarFicha(id) {
   if (toqueDuplo("retirarFicha")) return; // evita rodar duas vezes num toque duplo
@@ -274,7 +279,7 @@ function bindFichaAcoes(f, id) {
 }
 /* apagar mesa também pelo Escudo */
 function escudoApagarHTML() {
-  return `<details class="box"><summary style="cursor:pointer"><b style="color:var(--red)">Apagar esta mesa</b></summary><div class="stack" style="margin-top:10px"><p class="muted small" style="margin:0">Some tudo para todos e não dá para desfazer. Baixe o backup antes se quiser guardar.</p><button class="btn danger" id="btnApagarMesa">Apagar a mesa ${esc(S.mesaId || "")}</button></div></details>`;
+  return `<details class="box"><summary style="cursor:pointer"><b style="color:var(--red-hi)">Apagar esta mesa</b></summary><div class="stack" style="margin-top:10px"><p class="muted small" style="margin:0">Some tudo para todos e não dá para desfazer. Baixe o backup antes se quiser guardar.</p><button class="btn danger" id="btnApagarMesa">Apagar a mesa ${esc(S.mesaId || "")}</button></div></details>`;
 }
 function bindEscudoApagar() {
   const b = $("#btnApagarMesa");

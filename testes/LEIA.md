@@ -58,3 +58,4 @@ cada aviso no arquivo de `src/` de onde veio (`src/js/ficha/npcs.js:375`). As re
 | `portas-trancadas` | Trancar e destrancar portas |
 | `arte-criaturas` | Arte das criaturas sem imagem: todo elemento desenha, cada nome dá uma criatura diferente |
 | `artes-em-lote` | Artes do bestiário: várias de uma vez pelo nome do arquivo; o backup leva as artes; mesa nova do mestre já começa com elas; o jogador só baixa a arte da criatura que entra em cena |
+| `privacidade-legal` | Aviso de cookies na primeira visita, YouTube só com cookies aceitos, as cinco páginas legais, rodapé com o responsável, consentimento obrigatório para criar mesa, links legais dentro da mesa sem sair dela, Esc e foco de volta nas janelas, Pular para o conteúdo, alt nas imagens, contraste mínimo de 4,5:1 e Meus dados (baixar e apagar) |

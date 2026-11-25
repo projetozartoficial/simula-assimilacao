@@ -5,9 +5,9 @@ async def main():
   async with async_playwright() as p:
     b=await p.chromium.launch(executable_path="/usr/bin/google-chrome",args=["--no-sandbox"])
     for w,h in ((1400,860),(390,800)):
-      x=await b.new_page(viewport={"width":w,"height":h});await x.add_init_script("localStorage.setItem('sa_ajuda','true')");errs=[];x.on("pageerror",lambda e:errs.append(str(e)))
+      x=await b.new_page(viewport={"width":w,"height":h});await x.add_init_script("localStorage.setItem('sa_ajuda','true');if(!localStorage.getItem('sa_cookies'))localStorage.setItem('sa_cookies',JSON.stringify({v:'recusado'}))");errs=[];x.on("pageerror",lambda e:errs.append(str(e)))
       await x.goto("http://localhost:8765/index.html#teste");await x.evaluate("localStorage.setItem('sa_nome',JSON.stringify('M'))");await x.reload();await x.wait_for_timeout(500)
-      await x.fill("#nmMesa","F");await x.click("#fNova button.primary");await x.wait_for_timeout(900)
+      await x.fill("#nmMesa","F");await x.check("#csMesa");await x.click("#fNova button.primary");await x.wait_for_timeout(900)
       await x.evaluate("openTool('documentos')");await x.wait_for_timeout(400)
       await x.click("#docNovo");await x.wait_for_timeout(500)
       await x.click("[data-dm='foto']");await x.wait_for_timeout(300)

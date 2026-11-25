@@ -912,7 +912,9 @@ function renderBoardTop() {
     if (S.isM && live && !isLive) h += `<button class="btn sm" id="btBack">Voltar à cena exibida</button>`;
   }
   const tc = S.trilha && S.trilha.tocando;
-  if (tc)
+  if (tc && MZ.semCookies && ytId(tc.src))
+    h += `<button class="btn sm" id="btCk" title="As músicas do YouTube só tocam com os cookies de terceiros aceitos">♪ Ouvir: aceitar cookies do YouTube</button>`;
+  else if (tc)
     h += MZ.bloqueado
       ? `<button class="btn sm primary" id="btSom">♪ Ativar som da mesa</button>`
       : `<button class="chip" id="btTr" style="cursor:pointer;color:var(--fg)">♪ ${esc(tc.titulo || "Trilha")}${tc.play ? "" : " (pausada)"}</button>`;
@@ -920,6 +922,8 @@ function renderBoardTop() {
   top.innerHTML = h;
   const bs = $("#btSom");
   if (bs) bs.onclick = destravarSom;
+  const bc = $("#btCk");
+  if (bc) bc.onclick = () => janelaLegal("cookies");
   const bt = $("#btTr");
   if (bt) bt.onclick = () => openTool("trilha");
   const b = $("#btLive");

@@ -2,12 +2,12 @@
 
 Mesa virtual gratuita para jogar **Assimilação RPG** com os amigos: fichas de Infectado, dados de símbolos
 (Sucesso, Adaptação e Pressão), cartas de Assimilação, Conflitos, Ameaças, Refúgio, mapas, tokens, documentos
-com tarjas e escudo do mestre. Feito por wasmorf, a partir do Simula Ordem (a mesma base de mesa virtual).
+com tarjas e escudo do mestre. Um projeto do Grupo Zart (contato: projetozart@gmail.com).
 
 Projeto de fã, sem fins lucrativos e sem ligação oficial com a New Order Editora. Os textos de regras do site
 são resumos escritos para a mesa; para jogar, use o Livro de Regras oficial.
 
-- **Site:** https://wasmorf.github.io/simula-assimilacao/
+- **Site:** https://projetozartoficial.github.io/simula-assimilacao/
 - **Hospedagem:** GitHub Pages, que serve só o arquivo `index.html`.
 - **Banco e login:** Firebase (plano Spark gratuito), com Firestore e login anônimo ou Google.
 
@@ -103,7 +103,7 @@ O site pode usar o mesmo projeto do Firebase do Simula Ordem. Para não misturar
 
 O Simula Ordem não tem esse filtro: no lobby dele as mesas e personagens do Assimilação aparecem. Para separar de
 vez, crie outro projeto no Firebase, cole a configuração em `js/nucleo/firebase-config.js`, publique o
-`firestore.rules` e autorize o domínio `wasmorf.github.io` em Authentication.
+`firestore.rules` e autorize o domínio `projetozartoficial.github.io` em Authentication.
 
 ### O que o jogador não vê
 
@@ -231,6 +231,15 @@ A ordem dos `.css` importa: quando duas regras empatam, vale a que vem depois.
 | `locais.js` | Locais escondidos do mapa (salas pretas até o mestre revelar) |
 | `tokens-extras.js` | Tokens: não redesenhar durante o arrasto e foto de NPC no token |
 | `portas.js` | Portas que abrem, portas trancadas e passagens entre cenas |
+
+#### `js/legal/` — Privacidade, regras e acessibilidade
+
+| Arquivo | O que faz |
+| --- | --- |
+| `legal.js` | Páginas legais (LGPD e Código de Defesa do Consumidor): Política de Privacidade, Termos de Uso, Cookies, Reembolso e Meus dados, em `#privacidade`, `#termos`, `#cookies`, `#reembolso`, `#meus-dados` (no início do site) ou em janela dentro da mesa (`janelaLegal`, pela Ajuda). Aviso de cookies na primeira visita (`avisoCookies`, escolha em `sa_cookies`; o YouTube da trilha só carrega com o aceite), caixa de consentimento nos formulários (`consentimentoHTML`), rodapé com o responsável (`rodapeHTML`), "Pular para o conteúdo" e janelas que fecham com Esc e devolvem o foco |
+
+Os textos legais ficam todos em `legal.js` (`legalHTML`). Mudou alguma coisa em como os dados são usados?
+Atualize o texto e a data em `LEGAL_DATA`. O responsável e o e-mail ficam em `ZART`.
 
 #### `js/jogo/` — Rolagens, Conflito, privado e trilha sonora
 

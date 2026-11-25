@@ -366,7 +366,7 @@ h3 .contador {
   cursor: pointer;
 }
 .pend:hover {
-  background: var(--purple);
+  background: #7330d8; /* roxo mais escuro: o texto claro fica legível (contraste 5,5:1) */
 }
 .pend.ruim {
   border-color: var(--red);

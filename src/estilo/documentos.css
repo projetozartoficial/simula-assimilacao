@@ -862,7 +862,7 @@
   padding-bottom: 52px;
 }
 .mesa-del:hover {
-  color: var(--red);
+  color: var(--red-hi);
   border-color: var(--red);
 }
 

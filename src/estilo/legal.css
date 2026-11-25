@@ -1,0 +1,144 @@
+/* Páginas legais, aviso de cookies, caixa de consentimento, rodapé e "Pular para o conteúdo" (legal/legal.js). */
+
+/* título de seção com cara de h3 (a ordem dos títulos continua certa para o leitor de tela) */
+h2.h3 {
+  font-size: 18px;
+  color: var(--purple-hi);
+}
+/* aparece só quando recebe o foco pelo teclado */
+.pular {
+  position: fixed;
+  left: 12px;
+  top: -60px;
+  z-index: 100;
+  background: var(--purple-hi);
+  color: #120a1c;
+  font-weight: 700;
+  padding: 10px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+}
+.pular:focus {
+  top: 12px;
+}
+#conteudo:focus,
+#board:focus {
+  outline: none;
+}
+a {
+  color: var(--purple-hi);
+}
+.legal-txt {
+  max-width: 76ch;
+  margin-top: 24px;
+  line-height: 1.6;
+}
+.legal-txt h1 {
+  font-size: 34px;
+  margin-bottom: 6px;
+}
+.legal-txt h2 {
+  font-size: 21px;
+  margin: 26px 0 8px;
+  color: var(--purple-hi);
+}
+.legal-txt p,
+.legal-txt li {
+  color: var(--fg);
+}
+.legal-txt ul {
+  padding-left: 20px;
+}
+.legal-txt li {
+  margin: 4px 0;
+}
+.legal-data {
+  color: var(--muted);
+  font-size: 13px;
+}
+.legal-tab {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  margin: 10px 0;
+}
+.legal-tab th,
+.legal-tab td {
+  text-align: left;
+  vertical-align: top;
+  padding: 8px;
+  border: 1px solid var(--line);
+}
+.legal-tab th {
+  background: var(--panel2);
+}
+.legal-modal {
+  max-width: 720px;
+  max-height: 86vh;
+  overflow: auto;
+}
+.legal-modal .legal-txt {
+  margin-top: 0;
+}
+/* rodapé: projeto de fã, responsável e links */
+.legal-foot p {
+  margin: 0 0 8px;
+}
+.legal-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+}
+.legal-links a {
+  color: var(--purple-hi);
+  padding: 4px 0;
+}
+/* caixa de consentimento dos formulários */
+.check.consent {
+  align-items: flex-start;
+  font-size: 13px;
+  line-height: 1.45;
+}
+.check.consent input {
+  margin-top: 3px;
+  flex: none;
+}
+/* aviso de cookies na primeira visita */
+.aviso-cookies {
+  position: fixed;
+  left: 50%;
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  width: min(640px, calc(100% - 24px));
+  z-index: 60;
+  display: grid;
+  gap: 10px;
+  padding: 14px 16px;
+  background: var(--panel);
+  border: 1px solid var(--purple);
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+  font-size: 14px;
+}
+.aviso-cookies p {
+  margin: 0;
+  line-height: 1.5;
+}
+@media (max-width: 760px) {
+  .legal-tab,
+  .legal-tab tbody,
+  .legal-tab tr,
+  .legal-tab td {
+    display: block;
+    width: 100%;
+  }
+  .legal-tab thead {
+    display: none;
+  }
+  .legal-tab tr {
+    margin-bottom: 10px;
+  }
+  .aviso-cookies {
+    bottom: calc(var(--navh) + 10px + env(safe-area-inset-bottom, 0px));
+  }
+}

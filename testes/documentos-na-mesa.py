@@ -13,10 +13,10 @@ async def main():
   async with async_playwright() as p:
     b=await p.chromium.launch(executable_path="/usr/bin/google-chrome",args=["--no-sandbox"])
     ctx=await b.new_context(viewport={"width":1440,"height":900},device_scale_factor=2);errs=[]
-    await ctx.add_init_script("localStorage.setItem('sa_ajuda','true');if(!localStorage.getItem('sa_nome'))localStorage.setItem('sa_nome',JSON.stringify('Jogador'))")
+    await ctx.add_init_script("localStorage.setItem('sa_ajuda','true');if(!localStorage.getItem('sa_cookies'))localStorage.setItem('sa_cookies',JSON.stringify({v:'recusado'}));if(!localStorage.getItem('sa_nome'))localStorage.setItem('sa_nome',JSON.stringify('Jogador'))")
     A=await ctx.new_page();A.on("pageerror",lambda e:errs.append("A:"+str(e)))
     await A.goto(U+"#teste");await A.wait_for_timeout(500)
-    await A.fill("#nmMesa","Mesa de investigação");await A.click("#fNova button.primary");await A.wait_for_timeout(700)
+    await A.fill("#nmMesa","Mesa de investigação");await A.check("#csMesa");await A.click("#fNova button.primary");await A.wait_for_timeout(700)
     code=(await A.evaluate("location.hash"))[6:]
     await A.evaluate(f"""(async()=>{{const sid='c'+rid(6);await S.db.set(P()+'/cenas/'+sid,{{nome:'Mesa',w:1600,h:1000,ordem:1,criada:Date.now()}});
       await S.db.set(P()+'/cenaImg/'+sid,{{url:{FUNDO}}});await S.db.merge(P(),{{cenaAtiva:sid}});await viewScene(sid);}})()""");await A.wait_for_timeout(1200)

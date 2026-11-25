@@ -8,11 +8,12 @@ async def main():
         b=await p.chromium.launch(executable_path='/usr/bin/google-chrome',args=['--no-sandbox'])
         ctx=await b.new_context(viewport={'width':1300,'height':850})
         m=await ctx.new_page();errs=[]
+        await m.add_init_script("if(!localStorage.getItem('sa_cookies'))localStorage.setItem('sa_cookies',JSON.stringify({v:'recusado'}))")
         for pg,nm in [(m,'M')]:
             pg.on('pageerror',lambda e,nm=nm: errs.append((nm,str(e))))
         try:
             await m.goto(URL);await m.wait_for_timeout(700)
-            await m.fill('#nmMesa','Mesa P');await m.click('#fNova button.btn.primary');await m.wait_for_timeout(1200)
+            await m.fill('#nmMesa','Mesa P');await m.check('#csMesa');await m.click('#fNova button.btn.primary');await m.wait_for_timeout(1200)
             h=await m.evaluate('location.hash');print(h)
             # mestre: anuncia conflito simples
             await m.click('#rail [data-tool="combate"]');await m.wait_for_timeout(300)
@@ -23,7 +24,7 @@ async def main():
             await j.goto('http://localhost:8765/index.html'+h);await j.wait_for_timeout(1500)
             await j.screenshot(path=OUT+'01-porta.png')
             if await j.locator('#pNome').count():
-                await j.fill('#pNome','Davi');await j.click('#fPorta button');await j.wait_for_timeout(1500)
+                await j.fill('#pNome','Davi');await j.check('#csPorta');await j.click('#fPorta button');await j.wait_for_timeout(1500)
             await j.screenshot(path=OUT+'02-mesa.png')
             await j.click('#bottomnav [data-tool="agentes"]');await j.wait_for_timeout(400)
             await j.click('#novaFicha');await j.wait_for_timeout(600)

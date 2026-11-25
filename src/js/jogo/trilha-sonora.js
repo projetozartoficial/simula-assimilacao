@@ -103,6 +103,15 @@ function aplicarTrilha() {
 }
 function carregarYT(cb) {
   if (MZ.ytReady) return cb();
+  // o YouTube usa cookies dele: só carrega se a pessoa aceitou os cookies de terceiros (legal/legal.js)
+  if (!cookiesTerceiros()) {
+    if (!MZ.semCookies) {
+      MZ.semCookies = true;
+      toast("A música da mesa vem do YouTube. Para ouvir, aceite os cookies de terceiros.");
+      if (S.mesaId) renderBoardTop();
+    }
+    return;
+  }
   (MZ.ytQ = MZ.ytQ || []).push(cb);
   if (MZ.ytLoading) return;
   MZ.ytLoading = true;
@@ -117,6 +126,7 @@ function carregarYT(cb) {
   }
   window.onYouTubeIframeAPIReady = () => {
     MZ.yt = new YT.Player("ytP", {
+      host: "https://www.youtube-nocookie.com", // modo de privacidade aprimorada
       width: 1,
       height: 1,
       playerVars: { autoplay: 1, controls: 0, playsinline: 1 },

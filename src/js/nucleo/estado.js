@@ -94,6 +94,10 @@ function fail(e) {
 
 /* ===================== INÍCIO ===================== */
 async function boot() {
+  // acessibilidade e privacidade valem em todas as telas (legal/legal.js)
+  janelasAcessiveis();
+  $("#pular").onclick = pularParaConteudo;
+  avisoCookies();
   const configured =
     window.firebase && FIREBASE_CONFIG.projectId && FIREBASE_CONFIG.projectId !== "COLE_AQUI";
   if (!configured) {
@@ -146,6 +150,13 @@ function start() {
   });
 }
 function route() {
+  const pg = location.hash.slice(1);
+  if (LEGAL_PAGINAS[pg]) {
+    // páginas legais (legal/legal.js): no lugar do início, saindo da mesa se estava numa
+    S.gate = null;
+    if (S.mesaId) leaveMesa(false);
+    return paginaLegal(pg);
+  }
   const m = location.hash.match(/^#mesa-([A-Z0-9]{4,10})$/);
   if (!m) S.gate = null;
   if (m && m[1] !== S.mesaId) enterMesa(m[1]);

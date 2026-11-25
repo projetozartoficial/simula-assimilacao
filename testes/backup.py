@@ -5,7 +5,7 @@ async def main():
   async with async_playwright() as p:
     b=await p.chromium.launch(executable_path="/usr/bin/google-chrome",args=["--no-sandbox"])
     x=await b.new_page(viewport={"width":390,"height":800},accept_downloads=True);errs=[];x.on("pageerror",lambda e:errs.append(str(e)))
-    await x.add_init_script("localStorage.setItem('sa_ajuda','true')")
+    await x.add_init_script("localStorage.setItem('sa_ajuda','true');if(!localStorage.getItem('sa_cookies'))localStorage.setItem('sa_cookies',JSON.stringify({v:'recusado'}))")
     await x.goto("http://localhost:8765/index.html#teste");await x.evaluate("localStorage.setItem('sa_nome',JSON.stringify('Ana'))");await x.reload();await x.wait_for_timeout(800)
     await x.evaluate("S.db.set('usuarios/'+S.uid+'/personagens/pA',{...novaFicha(),nome:'Mada Zart',dono:S.uid,criada:1})");await x.wait_for_timeout(800)
     async with x.expect_download() as dl: await x.click("[data-solobx='pA']")

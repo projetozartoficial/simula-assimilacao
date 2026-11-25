@@ -4,10 +4,10 @@ async def main():
   async with async_playwright() as p:
     b=await p.chromium.launch(executable_path="/usr/bin/google-chrome",args=["--no-sandbox"])
     x=await b.new_page(viewport={"width":1400,"height":860});errs=[];x.on("pageerror",lambda e:errs.append(str(e)))
-    await x.add_init_script("localStorage.setItem('sa_ajuda','true')")
+    await x.add_init_script("localStorage.setItem('sa_ajuda','true');if(!localStorage.getItem('sa_cookies'))localStorage.setItem('sa_cookies',JSON.stringify({v:'recusado'}))")
     await x.goto("http://localhost:8765/index.html#teste");await x.evaluate("localStorage.setItem('sa_nome',JSON.stringify('M'))");await x.reload();await x.wait_for_timeout(600)
     print("lobby botões:",await x.locator("#btnImpSolo").count(),await x.locator("#btnNovoSolo").count())
-    await x.fill("#nmMesa","E");await x.click("#fNova button.primary");await x.wait_for_timeout(900)
+    await x.fill("#nmMesa","E");await x.check("#csMesa");await x.click("#fNova button.primary");await x.wait_for_timeout(900)
     await x.evaluate("openTool('escudo')");await x.wait_for_timeout(500)
     print("escudo:",await x.locator("#capaEsc").count(),await x.locator("#btnApagarMesa").count(),await x.locator("#btnBkp").count())
     await x.evaluate("openTool('agentes')");await x.wait_for_timeout(500)

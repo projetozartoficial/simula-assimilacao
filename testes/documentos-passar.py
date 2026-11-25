@@ -5,12 +5,12 @@ async def main():
   async with async_playwright() as p:
     b=await p.chromium.launch(executable_path="/usr/bin/google-chrome",args=["--no-sandbox"])
     ctx=await b.new_context(viewport={"width":1300,"height":900});ctx.set_default_timeout(8000)
-    await ctx.add_init_script("localStorage.setItem('sa_ajuda','true')")
+    await ctx.add_init_script("localStorage.setItem('sa_ajuda','true');if(!localStorage.getItem('sa_cookies'))localStorage.setItem('sa_cookies',JSON.stringify({v:'recusado'}))")
     errs=[]
     async def pg(nome):
       x=await ctx.new_page();x.on("pageerror",lambda e:errs.append(nome+str(e)));await x.goto(U+"#teste");await x.evaluate(f"localStorage.setItem('sa_nome',JSON.stringify('{nome}'))");await x.wait_for_timeout(300);return x
     A=await pg("Mestre");await A.reload();await A.wait_for_timeout(500)
-    await A.fill("#nmMesa","Docs");await A.click("#fNova button.primary");await A.wait_for_timeout(800);code=(await A.evaluate("location.hash"))[1:]
+    await A.fill("#nmMesa","Docs");await A.check("#csMesa");await A.click("#fNova button.primary");await A.wait_for_timeout(800);code=(await A.evaluate("location.hash"))[1:]
     B=await pg("Ana");await B.goto(U+"#"+code);await B.wait_for_timeout(2000)
     C=await pg("Bia");await C.goto(U+"#"+code);await C.wait_for_timeout(2000)
     print("membros:",await A.evaluate("S.membros.map(m=>m.nome)"))

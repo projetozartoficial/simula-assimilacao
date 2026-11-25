@@ -6,13 +6,14 @@ async def main():
     async with async_playwright() as p:
         b=await p.chromium.launch(executable_path='/usr/bin/google-chrome',args=['--no-sandbox'])
         pg=await b.new_page(viewport={'width':1400,'height':900})
+        await pg.add_init_script("if(!localStorage.getItem('sa_cookies'))localStorage.setItem('sa_cookies',JSON.stringify({v:'recusado'}))")
         errs=[]
         pg.on('console',lambda m: errs.append(('console',m.type,m.text)) if m.type in ('error','warning') else None)
         pg.on('pageerror',lambda e: errs.append(('pageerror',str(e))))
         try:
          await pg.goto(URL); await pg.wait_for_timeout(800)
          await pg.screenshot(path=OUT+'01-lobby.png',full_page=True)
-         await pg.fill('#nmMesa','Teste Vale'); await pg.click('#fNova button.btn.primary')
+         await pg.fill('#nmMesa','Teste Vale'); await pg.check('#csMesa');await pg.click('#fNova button.btn.primary')
          await pg.wait_for_timeout(1500)
          print('hash',await pg.evaluate('location.hash'))
          # infectados

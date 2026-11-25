@@ -6,7 +6,7 @@ async def main():
   async with async_playwright() as p:
     b=await p.chromium.launch(executable_path="/usr/bin/google-chrome",args=["--no-sandbox"])
     ctx=await b.new_context(viewport={"width":1280,"height":820},accept_downloads=True);errs=[]
-    await ctx.add_init_script("localStorage.setItem('sa_ajuda','true');localStorage.setItem('sa_nome',JSON.stringify('Davi'))")
+    await ctx.add_init_script("localStorage.setItem('sa_ajuda','true');if(!localStorage.getItem('sa_cookies'))localStorage.setItem('sa_cookies',JSON.stringify({v:'recusado'}));localStorage.setItem('sa_nome',JSON.stringify('Davi'))")
     A=await ctx.new_page();A.on("pageerror",lambda e:errs.append(str(e)))
     await A.goto(U+"#teste");await A.wait_for_timeout(800)
     await A.evaluate("""(async()=>{for(const [n,c] of [['Mada Zart','Combatente'],['Iara','Ocultista']]){const f=novaFicha();Object.assign(f,{nome:n,classe:c,dono:S.uid,foto:'data:image/png;base64,AAAA'});

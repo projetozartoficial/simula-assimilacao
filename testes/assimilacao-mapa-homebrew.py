@@ -7,6 +7,7 @@ async def main():
     async with async_playwright() as p:
         b=await p.chromium.launch(executable_path='/usr/bin/google-chrome',args=['--no-sandbox'])
         pg=await b.new_page(viewport={'width':1366,'height':860});errs=[]
+        await pg.add_init_script("if(!localStorage.getItem('sa_cookies'))localStorage.setItem('sa_cookies',JSON.stringify({v:'recusado'}))")
         pg.on('pageerror',lambda e: errs.append(str(e)))
         try:
             await pg.goto(URL);await pg.wait_for_timeout(700)
@@ -15,7 +16,7 @@ async def main():
             await pg.screenshot(path=OUT+'01-solo.png')
             await pg.click('#btnTeste');await pg.wait_for_timeout(200);await pg.click('#rlGo');await pg.wait_for_timeout(200);await pg.click('#rlOk');await pg.wait_for_timeout(300)
             await pg.click('#soloX');await pg.wait_for_timeout(500)
-            await pg.fill('#nmMesa','Mapas');await pg.click('#fNova button.btn.primary');await pg.wait_for_timeout(1200)
+            await pg.fill('#nmMesa','Mapas');await pg.check('#csMesa');await pg.click('#fNova button.btn.primary');await pg.wait_for_timeout(1200)
             await pg.click('#rail [data-tool="cenas"]');await pg.wait_for_timeout(300)
             await pg.click('#btnCriarMapa2');await pg.wait_for_timeout(1200)
             await pg.screenshot(path=OUT+'02-modelos.png')

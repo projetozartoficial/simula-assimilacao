@@ -103,6 +103,7 @@ async function enterMesa(id) {
   telaPorta(`${porta.capa ? `<img class="porta-capa" src="${porta.capa}" alt="">` : ""}<span class="label">Mesa ${esc(id)}</span><h2>${esc(porta.nome)}</h2>${porta.desc ? `<p class="muted" style="margin:0">${esc(porta.desc)}</p>` : ""}
     <form class="stack" id="fPorta"><div class="field"><label class="label" for="pNome">Seu nome (o mestre vê)</label><input type="text" id="pNome" maxlength="40" value="${esc(nome0)}" required></div>
     ${ac === "senha" ? `<div class="field"><label class="label" for="pSenha">Senha da mesa</label><input type="text" id="pSenha" maxlength="40" autocomplete="off" required></div>` : ""}
+    ${consentimentoHTML("csPorta", "Seu nome serve só para o mestre e os jogadores desta mesa saberem quem você é.")}
     <button class="btn primary">${ac === "aprovacao" ? "Pedir para entrar" : "Entrar na mesa"}</button></form>
     ${ac === "aprovacao" ? `<p class="muted small" style="margin:0">O mestre precisa aprovar a sua entrada.</p>` : ""}`);
   $("#fPorta").onsubmit = async ev => {

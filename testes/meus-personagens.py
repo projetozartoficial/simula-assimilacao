@@ -5,7 +5,7 @@ async def main():
   async with async_playwright() as p:
     b=await p.chromium.launch(executable_path="/usr/bin/google-chrome",args=["--no-sandbox"])
     ctx=await b.new_context(viewport={"width":1440,"height":900});ctx.set_default_timeout(8000)
-    await ctx.add_init_script("if(!localStorage.getItem('sa_nome'))localStorage.setItem('sa_nome',JSON.stringify('Davi'));localStorage.setItem('sa_ajuda','true')")
+    await ctx.add_init_script("if(!localStorage.getItem('sa_cookies'))localStorage.setItem('sa_cookies',JSON.stringify({v:'recusado'}));if(!localStorage.getItem('sa_nome'))localStorage.setItem('sa_nome',JSON.stringify('Davi'));localStorage.setItem('sa_ajuda','true');if(!localStorage.getItem('sa_cookies'))localStorage.setItem('sa_cookies',JSON.stringify({v:'recusado'}))")
     A=await ctx.new_page();errs=[];A.on("pageerror",lambda e:errs.append(str(e)))
     await A.goto(U+"#teste");await A.wait_for_timeout(800)
     print("modo teste",await A.evaluate("S.testMode"))
@@ -17,7 +17,7 @@ async def main():
     print("solos",await A.evaluate("(S.solos||[]).map(c=>c.nome+' '+c.ocupacao+' D'+c.D)"),"fichas residuais",await A.evaluate("Object.keys(S.fichas).length"))
     await A.screenshot(path=SP+"/so2_lobby.png")
     # criar mesa e trazer
-    await A.fill("#nmMesa","Mesa X");await A.click("#fNova button.primary");await A.wait_for_timeout(900)
+    await A.fill("#nmMesa","Mesa X");await A.check("#csMesa");await A.click("#fNova button.primary");await A.wait_for_timeout(900)
     await A.evaluate("openTool('agentes')");await A.wait_for_timeout(300);await A.click("#btnTrazerSolo");await A.wait_for_timeout(300);await A.click("#mForm button.primary");await A.wait_for_timeout(800)
     print("na mesa",await A.evaluate("Object.values(S.fichas).map(f=>f.nome+'|'+(f.solo?'solo':'mesa'))"))
     await A.click("[data-stab='historia']");await A.wait_for_timeout(300);await A.click("#btnGuardarConta");await A.wait_for_timeout(600)

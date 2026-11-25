@@ -125,18 +125,20 @@ function showLobby() {
   L.innerHTML = `<div class="lwrap">
    <div class="row between"><div class="brand">${I.logo()}<div>Simula Assimilação<small>Assimilação RPG · mesa virtual</small></div></div>
     <div class="who">${S.testMode ? '<span class="tag red">Modo de teste</span>' : anon ? `Convidado neste aparelho <button class="btn sm" id="btnGoogle">Entrar com Google</button>` : S.authUser ? `Conectado como ${esc(S.authUser.displayName || S.authUser.email || "jogador")} <button class="btn sm ghost" id="btnSair">Sair</button>` : ""}</div></div>
+   <main id="conteudo" tabindex="-1">
    <section class="hero">
     <div class="stack"><span class="label">Mesa virtual de Assimilação RPG</span>
      <h1>Sobreviva ao <em>Colapso</em><br>com os seus <b>Infectados</b>.</h1>
      <p>Fichas de Infectado com as regras do livro, dados de Sucesso, Adaptação e Pressão que todo mundo vê na hora, cartas de Assimilação, Conflitos, Refúgio, cenas e mapas com tokens. Crie uma mesa e mande o link para o grupo.</p>
      <div class="feats">${["Fichas de Infectado", "Dados de símbolos", "Cartas de Assimilação", "Conflitos", "Refúgio", "Cenas e tokens"].map(x => `<span class="tag on">${x}</span>`).join("")}</div>
     </div>
-    <form class="box stack" id="fNova"><h3>Nova mesa</h3>
+    <form class="box stack" id="fNova"><h2 class="h3">Nova mesa</h2>
      <div class="field"><label class="label" for="nmMesa">Nome da campanha</label><input type="text" id="nmMesa" maxlength="60" placeholder="Ex.: Vale dos Montes Castanhos" required></div>
      <div class="field"><label class="label" for="dsMesa">Descrição curta</label><input type="text" id="dsMesa" maxlength="120" placeholder="Ex.: 10 anos depois do Colapso"></div>
      <div class="field"><label class="label" for="acMesa">Quem pode entrar</label><select id="acMesa"><option value="livre">Quem tiver o link ou o código</option><option value="senha">Só com senha</option><option value="aprovacao">Só quem eu aprovar</option></select></div>
      <div class="field" id="snWrap" hidden><label class="label" for="snMesa">Senha da mesa</label><input type="text" id="snMesa" maxlength="40" autocomplete="off"></div>
      <label class="check"><input type="checkbox" id="lsMesa"> Mostrar na lista pública do site</label>
+     ${consentimentoHTML("csMesa", "O nome e a descrição da mesa ficam guardados para a mesa funcionar e aparecem para quem entra nela.")}
      <button class="btn primary">Criar mesa como mestre</button>
      <div class="sub">Já tem um código?</div>
      <div class="row"><input type="text" id="codeIn" placeholder="Ex.: ASK7RQ2" maxlength="10" style="flex:1;text-transform:uppercase"><button type="button" class="btn" id="btnEntrar">Entrar</button></div>
@@ -165,8 +167,10 @@ function showLobby() {
    ${visited.length ? `<section class="stack" style="margin-top:26px"><h2>Mesas em que você joga</h2><div class="mesas">${visited.map(card).join("")}</div></section>` : ""}
    <section class="stack" style="margin-top:26px"><h2>Mesas públicas</h2>${others.length ? `<div class="mesas">${others.map(card).join("")}</div>` : `<div class="empty">${S.loaded.lobby ? (S.lobbyErr ? "Não consegui carregar a lista de mesas." : "Nenhuma mesa pública agora. As mesas de grupos de amigos ficam fora desta lista e entram pelo link.") : "Carregando mesas…"}</div>`}</section>
    ${anon ? `<p class="muted small" style="margin-top:30px">Como convidado, você é reconhecido só neste navegador. Entre com Google para ser o mesmo jogador (e o mesmo mestre) em qualquer aparelho.</p>` : ""}
-   <footer class="foot">Simula Assimilação é um projeto de fã, gratuito e sem fins lucrativos, feito por wasmorf. Não é um produto oficial nem tem ligação com a New Order Editora. Assimilação RPG e seus símbolos pertencem aos seus donos. Para jogar, use o Livro de Regras oficial.</footer>
+   </main>
+   ${rodapeHTML()}
   </div>`;
+  bindLegal(L);
   $$("[data-mesa]").forEach(
     b =>
       (b.onclick = () => {
@@ -317,6 +321,14 @@ async function trocarUsuario(u) {
   subscribeMeus();
 }
 async function googleLogin() {
+  // antes de entrar, diz o que a conta Google traz e para quê, e pede o consentimento (LGPD)
+  const ok = await formBox(
+    "Entrar com Google",
+    `<p style="margin:0">Ao entrar, o site recebe da sua conta Google o nome, o e-mail e a foto. Eles servem só para mostrar quem está conectado e para você ter as suas mesas e personagens em qualquer aparelho. Nada é vendido nem usado para anúncios.</p>
+     ${consentimentoHTML("csGoogle", "Você pode sair da conta ou apagar os seus dados quando quiser, em Meus dados.")}`,
+    "Continuar com Google"
+  );
+  if (!ok) return;
   const auth = firebase.auth();
   const prov = new firebase.auth.GoogleAuthProvider();
   try {

@@ -5,9 +5,9 @@ async def main():
   async with async_playwright() as p:
     b=await p.chromium.launch(executable_path="/usr/bin/google-chrome",args=["--no-sandbox"])
     x=await b.new_page(viewport={"width":1366,"height":800});errs=[];x.on("pageerror",lambda e:errs.append(str(e)))
-    await x.add_init_script("localStorage.setItem('sa_ajuda','true')")
+    await x.add_init_script("localStorage.setItem('sa_ajuda','true');if(!localStorage.getItem('sa_cookies'))localStorage.setItem('sa_cookies',JSON.stringify({v:'recusado'}))")
     await x.goto(U+"#teste");await x.evaluate("localStorage.setItem('sa_nome',JSON.stringify('Mestre'))");await x.reload();await x.wait_for_timeout(700)
-    await x.fill("#nmMesa","Organização");await x.click("#fNova button.primary");await x.wait_for_timeout(900)
+    await x.fill("#nmMesa","Organização");await x.check("#csMesa");await x.click("#fNova button.primary");await x.wait_for_timeout(900)
     # 1. anotações do mestre (bug das duas subscribeNotas)
     await x.evaluate("openTool('escudo')");await x.wait_for_timeout(500)
     await x.fill("#notasM","gancho do vilão");await x.wait_for_timeout(1800)

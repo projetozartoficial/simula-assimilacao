@@ -14,10 +14,10 @@ async def main():
     b=await p.chromium.launch(executable_path="/usr/bin/google-chrome",args=["--no-sandbox"])
     x=await b.new_page(**p.devices["iPhone 13"]);errs=[];x.on("pageerror",lambda e:errs.append(str(e)))
     # o nome vai antes de abrir (sem recarregar a página)
-    await x.add_init_script("localStorage.setItem('sa_ajuda','true');localStorage.setItem('sa_nome',JSON.stringify('Mestre'))")
+    await x.add_init_script("localStorage.setItem('sa_ajuda','true');if(!localStorage.getItem('sa_cookies'))localStorage.setItem('sa_cookies',JSON.stringify({v:'recusado'}));localStorage.setItem('sa_nome',JSON.stringify('Mestre'))")
     await x.goto("http://localhost:8765/index.html#teste");await x.wait_for_timeout(700)
     r=await x.evaluate(CHK.replace("arguments[0]","'body'"));print("LOBBY",r);await x.screenshot(path=SP+"/lobby.png")  # sem full_page: ele faz o Chrome de teste esquecer a tela de toque
-    await x.fill("#nmMesa","O Silêncio da Rua das Acácias");await x.click("#fNova button.primary");await x.wait_for_timeout(900)
+    await x.fill("#nmMesa","O Silêncio da Rua das Acácias");await x.check("#csMesa");await x.click("#fNova button.primary");await x.wait_for_timeout(900)
     await x.evaluate("""(async()=>{
       const f=novaFicha();Object.assign(f,{nome:'Mada Zart Teste Nome Longo',dono:S.uid,classe:'Combatente',origem:'Investigador',nex:35});S.fichas['fA']=f;saveFicha('fA',true);
       await S.db.set(P()+'/npcs/nJ',{...novaFicha(),nome:'Juliana',npc:true,visivel:false,dono:S.uid});

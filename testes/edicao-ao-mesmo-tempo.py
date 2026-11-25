@@ -6,11 +6,11 @@ async def main():
   async with async_playwright() as p:
     b=await p.chromium.launch(executable_path="/usr/bin/google-chrome",args=["--no-sandbox"])
     ctx=await b.new_context(viewport={"width":1280,"height":820});errs=[]
-    await ctx.add_init_script("localStorage.setItem('sa_ajuda','true');if(!localStorage.getItem('sa_nome'))localStorage.setItem('sa_nome',JSON.stringify('Jogador'))")
+    await ctx.add_init_script("localStorage.setItem('sa_ajuda','true');if(!localStorage.getItem('sa_cookies'))localStorage.setItem('sa_cookies',JSON.stringify({v:'recusado'}));if(!localStorage.getItem('sa_nome'))localStorage.setItem('sa_nome',JSON.stringify('Jogador'))")
     async def page(n):
       pg=await ctx.new_page();pg.on("pageerror",lambda e:errs.append(n+":"+str(e)));return pg
     A=await page("A");await A.goto(U+"#teste");await A.wait_for_timeout(500)
-    await A.fill("#nmMesa","Junto");await A.click("#fNova button.primary");await A.wait_for_timeout(700)
+    await A.fill("#nmMesa","Junto");await A.check("#csMesa");await A.click("#fNova button.primary");await A.wait_for_timeout(700)
     code=(await A.evaluate("location.hash"))[6:]
     B=await page("B");await B.goto(U+"#mesa-"+code);await B.wait_for_timeout(2500)
     await B.click("#novaFicha");await B.wait_for_timeout(2500)

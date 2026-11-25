@@ -5,10 +5,10 @@ async def main():
   async with async_playwright() as p:
     b=await p.chromium.launch(executable_path="/usr/bin/google-chrome",args=["--no-sandbox"])
     ctx=await b.new_context(viewport={"width":1440,"height":860});ctx.set_default_timeout(9000)
-    await ctx.add_init_script("if(!sessionStorage.getItem('x')){sessionStorage.setItem('x',1)};localStorage.setItem('sa_ajuda','true')")
+    await ctx.add_init_script("if(!sessionStorage.getItem('x')){sessionStorage.setItem('x',1)};localStorage.setItem('sa_ajuda','true');if(!localStorage.getItem('sa_cookies'))localStorage.setItem('sa_cookies',JSON.stringify({v:'recusado'}))")
     A=await ctx.new_page();errs=[];A.on("pageerror",lambda e:errs.append("A:"+str(e)))
     await A.goto(U+"#teste");await A.evaluate("localStorage.setItem('sa_nome',JSON.stringify('Davi'))");await A.wait_for_timeout(500)
-    await A.fill("#nmMesa","Base");await A.click("#fNova button.primary");await A.wait_for_timeout(900)
+    await A.fill("#nmMesa","Base");await A.check("#csMesa");await A.click("#fNova button.primary");await A.wait_for_timeout(900)
     code=(await A.evaluate("location.hash"))[6:]
     await A.evaluate("openTool('cenas')");await A.wait_for_timeout(300);await A.click("#btnCriarMapa2");await A.wait_for_timeout(800)
     await A.click("[data-mod='1']");await A.wait_for_timeout(2500)
@@ -34,7 +34,7 @@ async def main():
     # jogador
     B=await ctx.new_page();B.on("pageerror",lambda e:errs.append("B:"+str(e)))
     await B.goto(U+"#teste");await B.wait_for_timeout(800);await B.goto(U+"#mesa-"+code);await B.wait_for_timeout(1300)
-    if await B.locator("#pNome").count():await B.fill("#pNome","Bia");await B.click("#fPorta button");await B.wait_for_timeout(2000)
+    if await B.locator("#pNome").count():await B.fill("#pNome","Bia");await B.check("#csPorta");await B.click("#fPorta button");await B.wait_for_timeout(2000)
     await B.wait_for_timeout(1500)
     print("jogador ve escondidos:",await B.evaluate("locaisFechados().length"),"| fog visivel:",await B.evaluate("!$('#fogC').hidden"))
     await B.screenshot(path=SP+"/oc3_jogador.png")

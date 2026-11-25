@@ -8,7 +8,7 @@
   --line: #26352d;
   --fg: #e7efe9;
   --muted: #8fa198;
-  --purple: #239b72;
+  --purple: #1b7d5b; /* branco por cima: contraste 5,1:1 */
   --purple-hi: #5fe0b0;
   --purple-soft: #0f2e24;
   --red: #d9531f;
@@ -129,7 +129,7 @@ h3 {
   color: #fff;
 }
 .btn.primary:hover {
-  background: #2bb586;
+  background: #187552; /* mais escuro no hover: o branco continua legível (contraste 5,7:1) */
 }
 .btn.danger {
   background: var(--red-soft);
